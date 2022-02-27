@@ -17,5 +17,10 @@ docker-compose down
 
 # Deploy to microk8s
 
-docker push localhost:32000/csharpauth:1.0.2
+docker push 192.168.1.84:32000/csharpauth:1.0.6
 microk8s helm3 install csharpauth ./csharpauth
+
+# on daffy
+kubectl create namespace websites
+docker push 192.168.1.151:32000/csharpauth:1.0.6
+helm install csharpauth ./csharpauth --namespace websites
