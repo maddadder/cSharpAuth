@@ -6,21 +6,22 @@ using System.Threading.Tasks;
 
 namespace cSharpAuth.Data
 {
-    public class WeatherForecastService
+    public class UserProfileService
     {
         private readonly HttpClient _httpClient;
-        public WeatherForecastService(HttpClient httpClient){
+        public UserProfileService(HttpClient httpClient){
             _httpClient = httpClient;
         }
-        private static readonly string[] Summaries = new[]
-        {
-            "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-        };
 
-        public async Task<IEnumerable<Profile>> GetForecastAsync(string search)
+        public async Task<IEnumerable<Profile>> GetUserProfileAsync(string search)
         {
             swaggerClient client = new swaggerClient("https://couchclient.leenet.link",_httpClient);
             return await client.ProfilesAsync(search, null, null);
+        }
+        public async Task<IEnumerable<UserLink>> GetUserLinksAsync(string search)
+        {
+            swaggerClient client = new swaggerClient("https://couchclient.leenet.link",_httpClient);
+            return await client.UserlinksAsync(search, null, null);
         }
     }
 }

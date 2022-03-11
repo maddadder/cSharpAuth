@@ -1,13 +1,13 @@
 ﻿@page "/fetchdata"
 
 @using cSharpAuth.Data
-@inject WeatherForecastService ForecastService
+@inject UserProfileService UserProfileService
 
 <h1>List of users</h1>
 
 <p>This component demonstrates fetching data from a service.</p>
 
-@if (forecasts == null)
+@if (userProfiles == null)
 {
     <p><em>Loading...</em></p>
 }
@@ -16,20 +16,18 @@ else
     <table class="table">
         <thead>
             <tr>
-                <th>Id</th>
                 <th>FirstName</th>
                 <th>LastName</th>
                 <th>Email</th>
             </tr>
         </thead>
         <tbody>
-            @foreach (var forecast in forecasts)
+            @foreach (var userProfile in userProfiles)
             {
                 <tr>
-                    <td>@forecast.Pid</td>
-                    <td>@forecast.FirstName</td>
-                    <td>@forecast.LastName</td>
-                    <td>@forecast.Email</td>
+                    <td>@userProfile.FirstName</td>
+                    <td>@userProfile.LastName</td>
+                    <td>@userProfile.Email</td>
                 </tr>
             }
         </tbody>
@@ -37,10 +35,10 @@ else
 }
 
 @code {
-    private IEnumerable<Profile> forecasts;
+    private IEnumerable<Profile> userProfiles;
 
     protected override async Task OnInitializedAsync()
     {
-        forecasts = await ForecastService.GetForecastAsync("a");
+        userProfiles = await UserProfileService.GetUserProfileAsync("a");
     }
 }

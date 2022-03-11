@@ -2,7 +2,7 @@ using System;
 
 namespace cSharpAuth.Data
 {
-    public class WeatherForecast
+    public class UserProfile
     {
         public DateTime Date { get; set; }
 
