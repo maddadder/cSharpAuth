@@ -5,7 +5,8 @@
 @using Microsoft.AspNetCore.Components.Authorization
 @using System.Diagnostics
 @using cSharpAuth.Data
-@inject UserProfileService UserProfileService
+@using cSharpAuth.Services
+@inject UserLinkService UserLinkService
 @inject AuthenticationStateProvider AuthenticationStateProvider
 
 
@@ -43,7 +44,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        userlinks = await UserProfileService.GetUserLinksAsync("http");
+        userlinks = await UserLinkService.GetUserLinksAsync("http");
     }
 
     private void SecureMethod()
