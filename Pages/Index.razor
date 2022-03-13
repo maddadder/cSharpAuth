@@ -22,11 +22,23 @@
             }
             else
             {
-                <div>
+                <div class="input-group col">
                     <a href='/link/add' class="btn btn-primary" role="button">
                         <i class="fas fa-user-plus"></i>
                         Add Link
                     </a>
+                </div>
+                <div class="input-group col">
+                    <input type="text" class="form-control" placeholder="Search links by name"
+                        @bind="SearchString" @bind:event="oninput" @onkeyup="FilterUser" />
+                    @if (SearchString.Length > 0)
+                    {
+                        <div class="input-group-append">
+                            <button class="btn btn-danger" @onclick="ResetSearch">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                    }
                 </div>
                 <table class="table">
                     <thead>
@@ -60,13 +72,33 @@
 
 @code {
     
-    private IEnumerable<UserLink> userlinks;
+    protected List<UserLink> userlinks = new();
+    protected List<UserLink> searchUserlinks = new();
 
     protected override async Task OnInitializedAsync()
     {
-        userlinks = await UserLinkService.List("http");
+        userlinks = (await UserLinkService.List("http")).ToList();
+        searchUserlinks = userlinks;
     }
-
+    protected string SearchString { get; set; } = string.Empty;
+    protected void FilterUser()
+    {
+        if (!string.IsNullOrEmpty(SearchString))
+        {
+            userlinks = searchUserlinks
+                .Where(x => x.Content.IndexOf(SearchString, StringComparison.OrdinalIgnoreCase) != -1)
+                .ToList();
+        }
+        else
+        {
+            userlinks = searchUserlinks;
+        }
+    }
+    protected void ResetSearch()
+    {
+        SearchString = string.Empty;
+        userlinks = searchUserlinks;
+    }
     private void SecureMethod()
     {
 
