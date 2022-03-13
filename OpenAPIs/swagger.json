@@ -493,6 +493,14 @@
           },
           "password": {
             "type": "string"
+          },
+          "created": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modified": {
+            "type": "string",
+            "format": "date-time"
           }
         },
         "additionalProperties": false
@@ -578,6 +586,14 @@
           "target": {
             "type": "string",
             "nullable": true
+          },
+          "created": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modified": {
+            "type": "string",
+            "format": "date-time"
           }
         },
         "additionalProperties": false

@@ -9,23 +9,23 @@
 <EditForm OnValidSubmit="SaveUser" EditContext="@editContext">
     <DataAnnotationsValidator />
     <div class="mb-3">
-        <label for="Content" class="form-label">Content</label>
+        <label for="Content" class="form-label">Title</label>
         <div class="col-md-4">
-            <InputText class="form-control" @bind-Value="link.Content" />
+            <InputText class="form-control" @bind-Value="link.Content" placeholder="My Website Link" />
         </div>
         <ValidationMessage For="@(() => link.Content)" />
     </div>
     <div class="mb-3">
-        <label for="Href" class="form-label">Href</label>
+        <label for="Href" class="form-label">Website Link</label>
         <div class="col-md-4">
-            <InputText class="form-control" @bind-Value="link.WebsiteLink" />
+            <InputText class="form-control" @bind-Value="link.WebsiteLink" placeholder="https://www.leenet.link" />
         </div>
         <ValidationMessage For="@(() => link.WebsiteLink)" />
     </div>
     <div class="mb-3">
         <label for="Target" class="form-label">Target</label>
         <div class="col-md-4">
-            <InputText class="form-control" @bind-Value="link.Target" />
+            <InputText class="form-control" @bind-Value="link.Target" placeholder="_blank" />
         </div>
         <ValidationMessage For="@(() => link.Target)" />
     </div>

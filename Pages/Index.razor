@@ -13,60 +13,62 @@
         <button class="btn btn-primary" @onclick="SecureMethod">Authorized Only Button</button>
     </Authorized>
     <NotAuthorized>
-        <h2>Authentication Failure!</h2>
-        <p>You're not signed in.</p>
-        <div class="jumbotron mt-3">
-            @if (userlinks == null)
-            {
-                <div>loading...</div>
-            }
-            else
-            {
-                <div class="input-group col">
-                    <a href='/link/add' class="btn btn-primary" role="button">
-                        <i class="fas fa-user-plus"></i>
-                        Add Link
-                    </a>
+        @if (userlinks == null)
+        {
+            <div class="container">
+                <div class="row">
+                    <div class="col-xs-12 col-md-12">loading...</div>
                 </div>
-                <div class="input-group col">
-                    <input type="text" class="form-control" placeholder="Search links by name"
-                        @bind="SearchString" @bind:event="oninput" @onkeyup="FilterUser" />
-                    @if (SearchString.Length > 0)
-                    {
-                        <div class="input-group-append">
-                            <button class="btn btn-danger" @onclick="ResetSearch">
-                                <i class="fas fa-times"></i>
-                            </button>
-                        </div>
-                    }
+            </div>
+        }
+        else
+        {
+            <div class="container">
+                <div class="row">
+                    <div class="col-xs-6 col-md-6">
+                        <a href='/link/add' class="btn btn-primary" role="button">
+                            <i class="fas fa-user-plus"></i>
+                            Add Link
+                        </a>
+                    </div>
+                    <div class="col-xs-6 col-md-6">
+                        <input type="text" class="form-control" placeholder="Search links by name"
+                            @bind="SearchString" @bind:event="oninput" @onkeyup="FilterUser" />
+                    </div>
+                    <div class="col-xs-12 col-md-12">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Links</th><th>Created</th><th>Modified</th><th>&nbsp;</th><th>&nbsp;</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var link in userlinks.OrderBy(x => x.Content))
+                                {
+                                <tr>
+                                    <td>
+                                        <a target="@link.Target" href="@link.Href">@link.Content</a>
+                                    </td>
+                                    <td>@link.Created.ToString("MM/dd/yy")</td>
+                                    <td>@link.Modified.ToString("MM/dd/yy")</td>
+                                    <td>
+                                        <a href='/link/edit/@link.Pid' class="btn btn-outline-dark" role="button">
+                                            Edit
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a href='/link/delete/@link.Pid' class="btn btn-outline-danger" role="button">
+                                            Delete
+                                        </a>
+                                    </td>
+                                </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>Links</th><td> </td>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var link in userlinks)
-                        {
-                        <tr>
-                            <td>
-                                <a target="@link.Target" href="@link.Href">@link.Content</a>
-                            </td>
-                            <td>
-                                <a href='/link/edit/@link.Pid' class="btn btn-outline-dark" role="button">
-                                    Edit
-                                </a>
-                                <a href='/link/delete/@link.Pid' class="btn btn-outline-danger" role="button">
-                                    Delete
-                                </a>
-                            </td>
-                        </tr>
-                        }
-                    </tbody>
-                </table>
-            }
-        </div>
+            </div>
+        }
     </NotAuthorized>
 </AuthorizeView>
 
