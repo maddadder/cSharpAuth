@@ -1,5 +1,6 @@
 @page "/link/add"
 @page "/link/edit/{userLinkId}"
+@using Lib
 @using cSharpAuth.Services
 @inject UserLinkService UserLinkService
 @inject NavigationManager NavigationManager
@@ -17,9 +18,9 @@
     <div class="mb-3">
         <label for="Href" class="form-label">Href</label>
         <div class="col-md-4">
-            <InputText class="form-control" @bind-Value="link.Href" />
+            <InputText class="form-control" @bind-Value="link.FriendlyHref" />
         </div>
-        <ValidationMessage For="@(() => link.Href)" />
+        <ValidationMessage For="@(() => link.FriendlyHref)" />
     </div>
     <div class="mb-3">
         <label for="Target" class="form-label">Target</label>
@@ -38,13 +39,18 @@
     public string userLinkId { get; set; }
     private EditContext editContext;
     protected string Title = "Add";
-    protected UserLink link = new();
+    protected UserLinkOverride link = new();
     protected override async Task OnParametersSetAsync()
     {
         if (!string.IsNullOrEmpty(userLinkId))
         {
             Title = "Edit";
-            link = await UserLinkService.Get(userLinkId);
+            var _link = await UserLinkService.Get(userLinkId);
+            link.__T = _link.__T;
+            link.Content = _link.Content;
+            link.Href = _link.Href;
+            link.Pid = _link.Pid;
+            link.Target = _link.Target;
         }
     }
     protected override void OnInitialized()

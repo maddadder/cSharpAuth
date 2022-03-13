@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Lib;
 
 namespace cSharpAuth.Services
 {
@@ -24,7 +25,7 @@ namespace cSharpAuth.Services
             Guid g = new Guid(id);
             return await client.UserLinkGetByIdAsync(g);
         }
-        public async Task Put(UserLink link)
+        public async Task Put(UserLinkOverride link)
         {
             UserLinkUpdateRequestCommand cmd = new UserLinkUpdateRequestCommand();
             cmd.Content = link.Content;
@@ -33,7 +34,7 @@ namespace cSharpAuth.Services
             cmd.Target = link.Target;
             await client.Userlink3Async(cmd);
         }
-        public async Task Post(UserLink link)
+        public async Task Post(UserLinkOverride link)
         {
             UserLinkCreateRequestCommand cmd = new UserLinkCreateRequestCommand();
             cmd.Content = link.Content;
