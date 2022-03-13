@@ -7,10 +7,10 @@ namespace Lib
     {
 
     
-        [Newtonsoft.Json.JsonProperty("FriendlyHref", Required = Newtonsoft.Json.Required.Always)]
+        [Newtonsoft.Json.JsonProperty("WebsiteLink", Required = Newtonsoft.Json.Required.Always)]
         [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
-        [System.ComponentModel.DataAnnotations.RegularExpression(@"^(ht|f)tp(s?)\:\/\/[0-9a-zA-Z]([-.\w]*[0-9a-zA-Z])*(:(0-9)*)*(\/?)([a-zA-Z0-9\-\.\?\,\'\/\\\+&%\$#_]*)?$",ErrorMessage ="Please provide a valid URL, e.g. https://amazon.com")]
-        public string FriendlyHref 
+        [System.ComponentModel.DataAnnotations.RegularExpression(@"^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$",ErrorMessage ="Please provide a valid URL, e.g. https://amazon.com")]
+        public string WebsiteLink 
         { 
             get{
                 return this.Href;
