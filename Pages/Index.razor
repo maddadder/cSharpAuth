@@ -1,10 +1,6 @@
 ﻿@page "/"
-@using System.Security.Claims
-@using Lib
-@using XuMath
+
 @using Microsoft.AspNetCore.Components.Authorization
-@using System.Diagnostics
-@using cSharpAuth.Data
 @using cSharpAuth.Services
 @inject UserLinkService UserLinkService
 @inject AuthenticationStateProvider AuthenticationStateProvider
@@ -20,20 +16,44 @@
         <h2>Authentication Failure!</h2>
         <p>You're not signed in.</p>
         <div class="jumbotron mt-3">
-            <h1>Links</h1>
-            <ul>
-                @if (userlinks == null)
-                {
-                    <li>loading...</li>
-                }
-                else
-                {
-                    @foreach (var link in userlinks)
-                    {
-                        <li><a target="@link.Target" href="@link.Href">@link.Content</a></li>
-                    }
-                }
-            </ul>
+            @if (userlinks == null)
+            {
+                <div>loading...</div>
+            }
+            else
+            {
+                <div>
+                    <a href='/link/add' class="btn btn-primary" role="button">
+                        <i class="fas fa-user-plus"></i>
+                        Add Link
+                    </a>
+                </div>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Links</th><td>edit</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var link in userlinks)
+                        {
+                        <tr>
+                            <td>
+                                <a target="@link.Target" href="@link.Href">@link.Content</a>
+                            </td>
+                            <td>
+                                <a href='/link/edit/@link.Pid' class="btn btn-outline-dark" role="button">
+                                    Edit
+                                </a>
+                                <a href='/link/delete/@link.Pid' class="btn btn-outline-danger" role="button">
+                                    Delete
+                                </a>
+                            </td>
+                        </tr>
+                        }
+                    </tbody>
+                </table>
+            }
         </div>
     </NotAuthorized>
 </AuthorizeView>
@@ -44,7 +64,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        userlinks = await UserLinkService.GetUserLinksAsync("http");
+        userlinks = await UserLinkService.List("http");
     }
 
     private void SecureMethod()
