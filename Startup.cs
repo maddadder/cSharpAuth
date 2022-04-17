@@ -18,6 +18,8 @@ using Microsoft.Identity.Web;
 using Microsoft.Identity.Web.UI;
 using System.IdentityModel.Tokens.Jwt;
 using Microsoft.AspNetCore.HttpOverrides;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
+using cSharpAuth.HealthChecks;
 
 namespace cSharpAuth
 {
@@ -37,6 +39,11 @@ namespace cSharpAuth
             services.AddHttpClient<UserProfileService>();
             services.AddHttpClient<UserLinkService>();
             services.AddHttpClient<UserMessageService>();
+            services.AddHealthChecks().AddTypeActivatedCheck<UserProfileHealthCheck>(
+                "Sample",
+                failureStatus: HealthStatus.Unhealthy,
+                tags: new[] { "sample" },
+                args: new object[] {  });
             // This is required to be instantiated before the OpenIdConnectOptions starts getting configured.
             // By default, the claims mapping will map claim names in the old format to accommodate older SAML applications.
             // 'http://schemas.microsoft.com/ws/2008/06/identity/claims/role' instead of 'roles'
