@@ -34,9 +34,9 @@ namespace cSharpAuth
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddTransient<UserProfileService>();
-            services.AddTransient<UserLinkService>();
-            services.AddTransient<UserMessageService>();
+            services.AddHttpClient<UserProfileService>();
+            services.AddHttpClient<UserLinkService>();
+            services.AddHttpClient<UserMessageService>();
             // This is required to be instantiated before the OpenIdConnectOptions starts getting configured.
             // By default, the claims mapping will map claim names in the old format to accommodate older SAML applications.
             // 'http://schemas.microsoft.com/ws/2008/06/identity/claims/role' instead of 'roles'
