@@ -459,6 +459,280 @@
           }
         }
       }
+    },
+    "/api/v1/usermessage/{id}": {
+      "get": {
+        "tags": [
+          "UserMessage"
+        ],
+        "operationId": "UserMessage-GetById",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserMessage"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserMessage"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserMessage"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "UserMessage"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/api/v1/usermessage": {
+      "post": {
+        "tags": [
+          "UserMessage"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserMessageCreateRequestCommand"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserMessageCreateRequestCommand"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserMessageCreateRequestCommand"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Success"
+          },
+          "409": {
+            "description": "Conflict"
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "UserMessage"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserMessageUpdateRequestCommand"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserMessageUpdateRequestCommand"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserMessageUpdateRequestCommand"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/api/v1/usermessage/twilio": {
+      "post": {
+        "tags": [
+          "UserMessage"
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "required": [
+                  "ApiVersion",
+                  "Body",
+                  "From",
+                  "To"
+                ],
+                "type": "object",
+                "properties": {
+                  "Body": {
+                    "type": "string"
+                  },
+                  "To": {
+                    "type": "string"
+                  },
+                  "From": {
+                    "type": "string"
+                  },
+                  "ApiVersion": {
+                    "type": "string"
+                  }
+                }
+              },
+              "encoding": {
+                "Body": {
+                  "style": "form"
+                },
+                "To": {
+                  "style": "form"
+                },
+                "From": {
+                  "style": "form"
+                },
+                "ApiVersion": {
+                  "style": "form"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Success"
+          },
+          "409": {
+            "description": "Conflict"
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+    "/api/v1/usermessages": {
+      "get": {
+        "tags": [
+          "UserMessage"
+        ],
+        "parameters": [
+          {
+            "name": "Search",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Limit",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "Skip",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/UserMessage"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/UserMessage"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/UserMessage"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
     }
   },
   "components": {
@@ -580,7 +854,7 @@
             "type": "string"
           },
           "href": {
-            "pattern": "^(?:http(s)?:\\/\\/)?[\\w.-]+(?:\\.[\\w\\.-]+)+[\\w\\-\\._~:/?#[\\]@!\\$&'\\(\\)\\*\\+,;=.]+$",
+            "pattern": "^(?:http(s)?:\\/\\/)[\\w.-]+(?:\\.[\\w\\.-]+)+[\\w\\-\\._~:/?#[\\]@!\\$&'\\(\\)\\*\\+,;=.]+$",
             "type": "string"
           },
           "target": {
@@ -609,7 +883,7 @@
             "type": "string"
           },
           "href": {
-            "pattern": "^(?:http(s)?:\\/\\/)?[\\w.-]+(?:\\.[\\w\\.-]+)+[\\w\\-\\._~:/?#[\\]@!\\$&'\\(\\)\\*\\+,;=.]+$",
+            "pattern": "^(?:http(s)?:\\/\\/)[\\w.-]+(?:\\.[\\w\\.-]+)+[\\w\\-\\._~:/?#[\\]@!\\$&'\\(\\)\\*\\+,;=.]+$",
             "type": "string"
           },
           "target": {
@@ -635,12 +909,106 @@
             "type": "string"
           },
           "href": {
-            "pattern": "^(?:http(s)?:\\/\\/)?[\\w.-]+(?:\\.[\\w\\.-]+)+[\\w\\-\\._~:/?#[\\]@!\\$&'\\(\\)\\*\\+,;=.]+$",
+            "pattern": "^(?:http(s)?:\\/\\/)[\\w.-]+(?:\\.[\\w\\.-]+)+[\\w\\-\\._~:/?#[\\]@!\\$&'\\(\\)\\*\\+,;=.]+$",
             "type": "string"
           },
           "target": {
             "type": "string",
             "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "UserMessage": {
+        "required": [
+          "apiVersion",
+          "body",
+          "from",
+          "pid",
+          "to"
+        ],
+        "type": "object",
+        "properties": {
+          "pid": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "__T": {
+            "type": "string",
+            "nullable": true
+          },
+          "body": {
+            "type": "string"
+          },
+          "to": {
+            "type": "string"
+          },
+          "from": {
+            "type": "string"
+          },
+          "apiVersion": {
+            "type": "string"
+          },
+          "created": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modified": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "additionalProperties": false
+      },
+      "UserMessageCreateRequestCommand": {
+        "required": [
+          "apiVersion",
+          "body",
+          "from",
+          "to"
+        ],
+        "type": "object",
+        "properties": {
+          "body": {
+            "type": "string"
+          },
+          "to": {
+            "type": "string"
+          },
+          "from": {
+            "type": "string"
+          },
+          "apiVersion": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "UserMessageUpdateRequestCommand": {
+        "required": [
+          "apiVersion",
+          "body",
+          "from",
+          "pid",
+          "to"
+        ],
+        "type": "object",
+        "properties": {
+          "pid": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "body": {
+            "type": "string"
+          },
+          "to": {
+            "type": "string"
+          },
+          "from": {
+            "type": "string"
+          },
+          "apiVersion": {
+            "type": "string"
           }
         },
         "additionalProperties": false

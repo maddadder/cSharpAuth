@@ -36,6 +36,7 @@ namespace cSharpAuth
         {
             services.AddTransient<UserProfileService>();
             services.AddTransient<UserLinkService>();
+            services.AddTransient<UserMessageService>();
             // This is required to be instantiated before the OpenIdConnectOptions starts getting configured.
             // By default, the claims mapping will map claim names in the old format to accommodate older SAML applications.
             // 'http://schemas.microsoft.com/ws/2008/06/identity/claims/role' instead of 'roles'
