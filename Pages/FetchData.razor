@@ -1,6 +1,5 @@
 ﻿@page "/fetchdata"
 
-@using cSharpAuth.Data
 @using cSharpAuth.Services
 @inject UserProfileService UserProfileService
 
@@ -36,7 +35,7 @@ else
 }
 
 @code {
-    private IEnumerable<Profile> userProfiles;
+    private IEnumerable<UserProfile> userProfiles;
 
     protected override async Task OnInitializedAsync()
     {

@@ -18,7 +18,7 @@ namespace cSharpAuth.Services
 
         public async Task<IEnumerable<UserLink>> List(string search)
         {
-            return await client.UserlinksAsync(search, null, null);
+            return await client.UserLinkListAsync(search, null, null);
         }
         public async Task<UserLink> Get(string id)
         {
@@ -32,7 +32,7 @@ namespace cSharpAuth.Services
             cmd.Href = link.Href;
             cmd.Pid = link.Pid;
             cmd.Target = link.Target;
-            await client.Userlink3Async(cmd);
+            await client.UserLinkUpdateAsync(cmd.Pid.ToString(), cmd);
         }
         public async Task Post(UserLinkOverride link)
         {
@@ -40,11 +40,11 @@ namespace cSharpAuth.Services
             cmd.Content = link.Content;
             cmd.Href = link.Href;
             cmd.Target = link.Target;
-            await client.Userlink2Async(cmd);
+            await client.UserLinkPostAsync(cmd);
         }
         public async Task Delete(Guid Pid)
         {
-            await client.UserlinkAsync(Pid);
+            await client.UserLinkDeleteAsync(Pid);
         }
     }
 }

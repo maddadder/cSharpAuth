@@ -18,7 +18,7 @@ namespace cSharpAuth.Services
 
         public async Task<IEnumerable<UserMessage>> List(string search)
         {
-            return await client.UsermessagesAsync(search, null, null);
+            return await client.UserMessageListAsync(search, null, null);
         }
         public async Task<UserMessage> Get(string id)
         {
@@ -33,7 +33,7 @@ namespace cSharpAuth.Services
             cmd.From = userMessage.From;
             cmd.ApiVersion = userMessage.ApiVersion;
             cmd.Pid = userMessage.Pid;
-            await client.Usermessage3Async(cmd);
+            await client.UserMessageUpdateAsync(cmd.Pid.ToString(), cmd);
         }
         
         public async Task Post(UserMessage userMessage)
@@ -43,11 +43,11 @@ namespace cSharpAuth.Services
             cmd.To = userMessage.To;
             cmd.From = userMessage.From;
             cmd.ApiVersion = userMessage.ApiVersion;
-            await client.Usermessage2Async(cmd);
+            await client.UserMesssagePostAsync(cmd);
         }
         public async Task Delete(Guid Pid)
         {
-            await client.UsermessageAsync(Pid);
+            await client.UserMessageDeleteAsync(Pid);
         }
     }
 }

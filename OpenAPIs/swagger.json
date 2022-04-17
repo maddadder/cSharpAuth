@@ -34,224 +34,13 @@
         }
       }
     },
-    "/api/v1/profile/{id}": {
-      "get": {
-        "tags": [
-          "Profile"
-        ],
-        "operationId": "UserProfile-GetById",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/Profile"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Profile"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Profile"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not Found"
-          },
-          "500": {
-            "description": "Server Error"
-          }
-        }
-      },
-      "delete": {
-        "tags": [
-          "Profile"
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success"
-          },
-          "404": {
-            "description": "Not Found"
-          },
-          "500": {
-            "description": "Server Error"
-          }
-        }
-      }
-    },
-    "/api/v1/profile": {
-      "post": {
-        "tags": [
-          "Profile"
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/ProfileCreateRequestCommand"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/ProfileCreateRequestCommand"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/ProfileCreateRequestCommand"
-              }
-            }
-          }
-        },
-        "responses": {
-          "201": {
-            "description": "Success"
-          },
-          "409": {
-            "description": "Conflict"
-          },
-          "500": {
-            "description": "Server Error"
-          }
-        }
-      },
-      "put": {
-        "tags": [
-          "Profile"
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/ProfileUpdateRequestCommand"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/ProfileUpdateRequestCommand"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/ProfileUpdateRequestCommand"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Success"
-          },
-          "404": {
-            "description": "Not Found"
-          },
-          "500": {
-            "description": "Server Error"
-          }
-        }
-      }
-    },
-    "/api/v1/profiles": {
-      "get": {
-        "tags": [
-          "Profile"
-        ],
-        "parameters": [
-          {
-            "name": "Search",
-            "in": "query",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "Limit",
-            "in": "query",
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          },
-          {
-            "name": "Skip",
-            "in": "query",
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Profile"
-                  }
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Profile"
-                  }
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Profile"
-                  }
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Server Error"
-          }
-        }
-      }
-    },
-    "/api/v1/userlink/{id}": {
+    "/api/v1/UserLink/GetById/{id}": {
       "get": {
         "tags": [
           "UserLink"
         ],
+        "summary": "Get userlink by Id",
+        "description": "Get a userlink by Id from the request",
         "operationId": "UserLink-GetById",
         "parameters": [
           {
@@ -266,7 +55,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Success",
+            "description": "Returns a report",
             "content": {
               "text/plain": {
                 "schema": {
@@ -286,46 +75,22 @@
             }
           },
           "404": {
-            "description": "Not Found"
+            "description": "Report not found"
           },
           "500": {
-            "description": "Server Error"
-          }
-        }
-      },
-      "delete": {
-        "tags": [
-          "UserLink"
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success"
-          },
-          "404": {
-            "description": "Not Found"
-          },
-          "500": {
-            "description": "Server Error"
+            "description": "Returns an internal error"
           }
         }
       }
     },
-    "/api/v1/userlink": {
+    "/api/v1/UserLink": {
       "post": {
         "tags": [
           "UserLink"
         ],
+        "summary": "Create a userlink",
+        "description": "Create a userlink from the request",
+        "operationId": "UserLink-Post",
         "requestBody": {
           "content": {
             "application/json": {
@@ -347,19 +112,34 @@
         },
         "responses": {
           "201": {
-            "description": "Success"
+            "description": "Create a userlink"
           },
           "409": {
-            "description": "Conflict"
+            "description": "the href of the link already exists"
           },
           "500": {
-            "description": "Server Error"
+            "description": "Returns an internal error"
           }
         }
-      },
+      }
+    },
+    "/api/v1/UserLink/Update/{id}": {
       "put": {
         "tags": [
           "UserLink"
+        ],
+        "summary": "Update a userlink",
+        "description": "Update a userlink from the request",
+        "operationId": "UserLink-Update",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
         ],
         "requestBody": {
           "content": {
@@ -382,22 +162,57 @@
         },
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "Update a userlink"
           },
           "404": {
-            "description": "Not Found"
+            "description": "userlink not found"
           },
           "500": {
-            "description": "Server Error"
+            "description": "Returns an internal error"
           }
         }
       }
     },
-    "/api/v1/userlinks": {
+    "/api/v1/UserLink/Delete/{id}": {
+      "delete": {
+        "tags": [
+          "UserLink"
+        ],
+        "summary": "Delete a userlink",
+        "description": "Delete a userlink from the request",
+        "operationId": "UserLink-Delete",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Delete a userlink"
+          },
+          "404": {
+            "description": "userlink not found"
+          },
+          "500": {
+            "description": "Returns an internal error"
+          }
+        }
+      }
+    },
+    "/api/v1/UserLink/List": {
       "get": {
         "tags": [
           "UserLink"
         ],
+        "summary": "Search for userlinks",
+        "description": "Get a list of userlinks from the request",
+        "operationId": "UserLink-List",
         "parameters": [
           {
             "name": "Search",
@@ -426,7 +241,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Success",
+            "description": "Returns the list of userlinks",
             "content": {
               "text/plain": {
                 "schema": {
@@ -455,16 +270,18 @@
             }
           },
           "500": {
-            "description": "Server Error"
+            "description": "Returns an internal error"
           }
         }
       }
     },
-    "/api/v1/usermessage/{id}": {
+    "/api/v1/UserMessage/GetById/{id}": {
       "get": {
         "tags": [
           "UserMessage"
         ],
+        "summary": "Get usermessage by Id",
+        "description": "Get a usermessage by Id from the request",
         "operationId": "UserMessage-GetById",
         "parameters": [
           {
@@ -479,7 +296,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Success",
+            "description": "Returns a report",
             "content": {
               "text/plain": {
                 "schema": {
@@ -499,46 +316,22 @@
             }
           },
           "404": {
-            "description": "Not Found"
+            "description": "Report not found"
           },
           "500": {
-            "description": "Server Error"
-          }
-        }
-      },
-      "delete": {
-        "tags": [
-          "UserMessage"
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success"
-          },
-          "404": {
-            "description": "Not Found"
-          },
-          "500": {
-            "description": "Server Error"
+            "description": "Returns an internal error"
           }
         }
       }
     },
-    "/api/v1/usermessage": {
+    "/api/v1/UserMessage": {
       "post": {
         "tags": [
           "UserMessage"
         ],
+        "summary": "Create a usermessage",
+        "description": "Create a usermessage from the request",
+        "operationId": "UserMesssage-Post",
         "requestBody": {
           "content": {
             "application/json": {
@@ -560,57 +353,25 @@
         },
         "responses": {
           "201": {
-            "description": "Success"
+            "description": "Create a usermessage"
           },
           "409": {
-            "description": "Conflict"
+            "description": "the href of the link already exists"
           },
           "500": {
-            "description": "Server Error"
-          }
-        }
-      },
-      "put": {
-        "tags": [
-          "UserMessage"
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/UserMessageUpdateRequestCommand"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/UserMessageUpdateRequestCommand"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/UserMessageUpdateRequestCommand"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Success"
-          },
-          "404": {
-            "description": "Not Found"
-          },
-          "500": {
-            "description": "Server Error"
+            "description": "Returns an internal error"
           }
         }
       }
     },
-    "/api/v1/usermessage/twilio": {
+    "/api/v1/UserMessage/twilio": {
       "post": {
         "tags": [
           "UserMessage"
         ],
+        "summary": "Create a usermessage",
+        "description": "Create a usermessage from the request",
+        "operationId": "UserMessage-Post-Twilio",
         "requestBody": {
           "content": {
             "multipart/form-data": {
@@ -656,22 +417,107 @@
         },
         "responses": {
           "201": {
-            "description": "Success"
+            "description": "Create a usermessage"
           },
           "409": {
-            "description": "Conflict"
+            "description": "the href of the link already exists"
           },
           "500": {
-            "description": "Server Error"
+            "description": "Returns an internal error"
           }
         }
       }
     },
-    "/api/v1/usermessages": {
+    "/api/v1/UserMessage/Update/{id}": {
+      "put": {
+        "tags": [
+          "UserMessage"
+        ],
+        "summary": "Update a usermessage",
+        "description": "Update a usermessage from the request",
+        "operationId": "UserMessage-Update",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserMessageUpdateRequestCommand"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserMessageUpdateRequestCommand"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserMessageUpdateRequestCommand"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Update a usermessage"
+          },
+          "404": {
+            "description": "usermessage not found"
+          },
+          "500": {
+            "description": "Returns an internal error"
+          }
+        }
+      }
+    },
+    "/api/v1/UserMessage/Delete/{id}": {
+      "delete": {
+        "tags": [
+          "UserMessage"
+        ],
+        "summary": "Delete a usermessage",
+        "description": "Delete a usermessage from the request",
+        "operationId": "UserMessage-Delete",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Delete a usermessage"
+          },
+          "404": {
+            "description": "usermessage not found"
+          },
+          "500": {
+            "description": "Returns an internal error"
+          }
+        }
+      }
+    },
+    "/api/v1/UserMessage/List": {
       "get": {
         "tags": [
           "UserMessage"
         ],
+        "summary": "Search for usermessages",
+        "description": "Get a list of usermessages from the request",
+        "operationId": "UserMessage-List",
         "parameters": [
           {
             "name": "Search",
@@ -700,7 +546,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Success",
+            "description": "Returns the list of usermessages",
             "content": {
               "text/plain": {
                 "schema": {
@@ -729,7 +575,248 @@
             }
           },
           "500": {
-            "description": "Server Error"
+            "description": "Returns an internal error"
+          }
+        }
+      }
+    },
+    "/api/v1/UserProfile/GetById/{id}": {
+      "get": {
+        "tags": [
+          "UserProfile"
+        ],
+        "summary": "Get user profile by Id",
+        "description": "Get a user profile by Id from the request",
+        "operationId": "UserProfile-GetById",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns a report",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserProfile"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserProfile"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserProfile"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Report not found"
+          },
+          "500": {
+            "description": "Returns an internal error"
+          }
+        }
+      }
+    },
+    "/api/v1/UserProfile": {
+      "post": {
+        "tags": [
+          "UserProfile"
+        ],
+        "summary": "Create a user profile",
+        "description": "Create a user profile from the request",
+        "operationId": "UserProfile-Post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserProfileCreateRequestCommand"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserProfileCreateRequestCommand"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserProfileCreateRequestCommand"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Create a user profile"
+          },
+          "409": {
+            "description": "the email of the user already exists"
+          },
+          "500": {
+            "description": "Returns an internal error"
+          }
+        }
+      }
+    },
+    "/api/v1/UserProfile/Update/{id}": {
+      "put": {
+        "tags": [
+          "UserProfile"
+        ],
+        "summary": "Update a user profile",
+        "description": "Update a user profile from the request",
+        "operationId": "UserProfile-Update",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserProfileUpdateRequestCommand"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserProfileUpdateRequestCommand"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserProfileUpdateRequestCommand"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Update a user profile"
+          },
+          "404": {
+            "description": "user profile not found"
+          },
+          "500": {
+            "description": "Returns an internal error"
+          }
+        }
+      }
+    },
+    "/api/v1/UserProfile/Delete/{id}": {
+      "delete": {
+        "tags": [
+          "UserProfile"
+        ],
+        "summary": "Delete a profile",
+        "description": "Delete a profile from the request",
+        "operationId": "UserProfile-Delete",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Delete a profile"
+          },
+          "404": {
+            "description": "profile not found"
+          },
+          "500": {
+            "description": "Returns an internal error"
+          }
+        }
+      }
+    },
+    "/api/v1/UserProfile/List": {
+      "get": {
+        "tags": [
+          "UserProfile"
+        ],
+        "summary": "Search for user profiles",
+        "description": "Get a list of user profiles from the request",
+        "operationId": "UserProfile-List",
+        "parameters": [
+          {
+            "name": "Search",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Limit",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "Skip",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns the list of user profiles",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/UserProfile"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/UserProfile"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/UserProfile"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Returns an internal error"
           }
         }
       }
@@ -737,103 +824,6 @@
   },
   "components": {
     "schemas": {
-      "Profile": {
-        "required": [
-          "email",
-          "firstName",
-          "lastName",
-          "password",
-          "pid"
-        ],
-        "type": "object",
-        "properties": {
-          "pid": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "__T": {
-            "type": "string",
-            "nullable": true
-          },
-          "firstName": {
-            "type": "string"
-          },
-          "lastName": {
-            "type": "string"
-          },
-          "email": {
-            "type": "string",
-            "format": "email"
-          },
-          "password": {
-            "type": "string"
-          },
-          "created": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "modified": {
-            "type": "string",
-            "format": "date-time"
-          }
-        },
-        "additionalProperties": false
-      },
-      "ProfileCreateRequestCommand": {
-        "required": [
-          "email",
-          "firstName",
-          "lastName",
-          "password"
-        ],
-        "type": "object",
-        "properties": {
-          "firstName": {
-            "type": "string"
-          },
-          "lastName": {
-            "type": "string"
-          },
-          "email": {
-            "type": "string",
-            "format": "email"
-          },
-          "password": {
-            "type": "string"
-          }
-        },
-        "additionalProperties": false
-      },
-      "ProfileUpdateRequestCommand": {
-        "required": [
-          "email",
-          "firstName",
-          "lastName",
-          "password",
-          "pid"
-        ],
-        "type": "object",
-        "properties": {
-          "pid": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "firstName": {
-            "type": "string"
-          },
-          "lastName": {
-            "type": "string"
-          },
-          "email": {
-            "type": "string",
-            "format": "email"
-          },
-          "password": {
-            "type": "string"
-          }
-        },
-        "additionalProperties": false
-      },
       "UserLink": {
         "required": [
           "content",
@@ -1008,6 +998,103 @@
             "type": "string"
           },
           "apiVersion": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "UserProfile": {
+        "required": [
+          "email",
+          "firstName",
+          "lastName",
+          "password",
+          "pid"
+        ],
+        "type": "object",
+        "properties": {
+          "pid": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "__T": {
+            "type": "string",
+            "nullable": true
+          },
+          "firstName": {
+            "type": "string"
+          },
+          "lastName": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string",
+            "format": "email"
+          },
+          "password": {
+            "type": "string"
+          },
+          "created": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modified": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "additionalProperties": false
+      },
+      "UserProfileCreateRequestCommand": {
+        "required": [
+          "email",
+          "firstName",
+          "lastName",
+          "password"
+        ],
+        "type": "object",
+        "properties": {
+          "firstName": {
+            "type": "string"
+          },
+          "lastName": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string",
+            "format": "email"
+          },
+          "password": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "UserProfileUpdateRequestCommand": {
+        "required": [
+          "email",
+          "firstName",
+          "lastName",
+          "password",
+          "pid"
+        ],
+        "type": "object",
+        "properties": {
+          "pid": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "firstName": {
+            "type": "string"
+          },
+          "lastName": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string",
+            "format": "email"
+          },
+          "password": {
             "type": "string"
           }
         },
