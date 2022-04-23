@@ -6,71 +6,62 @@
 @inject AuthenticationStateProvider AuthenticationStateProvider
 
 
-<AuthorizeView>
-    <Authorized>
-        <h2>Hello, @context.User.Identity.Name!</h2>
-        <p>You can only see this content if you're authorized.</p>
-        <button class="btn btn-primary" @onclick="SecureMethod">Authorized Only Button</button>
-    </Authorized>
-    <NotAuthorized>
-        @if (userlinks == null)
-        {
-            <div class="container">
-                <div class="row">
-                    <div class="col-xs-12 col-md-12">loading...</div>
-                </div>
+@if (userlinks == null)
+{
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 col-md-12">loading...</div>
+        </div>
+    </div>
+}
+else
+{
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-6 col-md-6">
+                <a href='/link/add' class="btn btn-primary" role="button">
+                    <i class="fas fa-user-plus"></i>
+                    Add Link
+                </a>
             </div>
-        }
-        else
-        {
-            <div class="container">
-                <div class="row">
-                    <div class="col-xs-6 col-md-6">
-                        <a href='/link/add' class="btn btn-primary" role="button">
-                            <i class="fas fa-user-plus"></i>
-                            Add Link
-                        </a>
-                    </div>
-                    <div class="col-xs-6 col-md-6">
-                        <input type="text" class="form-control" placeholder="Search links by name"
-                            @bind="SearchString" @bind:event="oninput" @onkeyup="FilterUser" />
-                    </div>
-                    <div class="col-xs-12 col-md-12">
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th>Links</th><th>Created</th><th>Modified</th><th>&nbsp;</th><th>&nbsp;</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach (var link in userlinks.OrderBy(x => x.Content))
-                                {
-                                <tr>
-                                    <td>
-                                        <a target="@link.Target" href="@link.Href">@link.Content</a>
-                                    </td>
-                                    <td>@link.Created.ToString("MM/dd/yy")</td>
-                                    <td>@link.Modified.ToString("MM/dd/yy")</td>
-                                    <td>
-                                        <a href='/link/edit/@link.Pid' class="btn btn-outline-dark" role="button">
-                                            Edit
-                                        </a>
-                                    </td>
-                                    <td>
-                                        <a href='/link/delete/@link.Pid' class="btn btn-outline-danger" role="button">
-                                            Delete
-                                        </a>
-                                    </td>
-                                </tr>
-                                }
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
+            <div class="col-xs-6 col-md-6">
+                <input type="text" class="form-control" placeholder="Search links by name"
+                    @bind="SearchString" @bind:event="oninput" @onkeyup="FilterUser" />
             </div>
-        }
-    </NotAuthorized>
-</AuthorizeView>
+            <div class="col-xs-12 col-md-12">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Links</th><th>Created</th><th>Modified</th><th>&nbsp;</th><th>&nbsp;</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var link in userlinks.OrderBy(x => x.Content))
+                        {
+                        <tr>
+                            <td>
+                                <a target="@link.Target" href="@link.Href">@link.Content</a>
+                            </td>
+                            <td>@link.Created.ToString("MM/dd/yy")</td>
+                            <td>@link.Modified.ToString("MM/dd/yy")</td>
+                            <td>
+                                <a href='/link/edit/@link.Pid' class="btn btn-outline-dark" role="button">
+                                    Edit
+                                </a>
+                            </td>
+                            <td>
+                                <a href='/link/delete/@link.Pid' class="btn btn-outline-danger" role="button">
+                                    Delete
+                                </a>
+                            </td>
+                        </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+}
 
 @code {
     
