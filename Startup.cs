@@ -19,6 +19,7 @@ using System.IdentityModel.Tokens.Jwt;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using cSharpAuth.HealthChecks;
+using Lib;
 
 namespace cSharpAuth
 {
@@ -35,6 +36,10 @@ namespace cSharpAuth
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            var bindAppSecrets = new AppSecrets();
+            Configuration.Bind("AppSecrets", bindAppSecrets);
+            services.AddSingleton(bindAppSecrets);
+            
             services.AddHttpClient<UserProfileService>();
             services.AddHttpClient<UserLinkService>();
             services.AddHttpClient<UserMessageService>();

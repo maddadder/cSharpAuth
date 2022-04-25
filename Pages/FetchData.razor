@@ -50,6 +50,6 @@ else
     {
         var state = await AuthenticationStateProvider.GetAuthenticationStateAsync();
         
-        userProfiles = await UserProfileService.GetUserProfileAsync(state.User.Identity.Name,"password","a");
+        userProfiles = await UserProfileService.GetUserProfileAsync(state.User.Identity.Name,"");
     }
 }
