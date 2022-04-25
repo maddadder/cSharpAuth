@@ -4,8 +4,7 @@
 @inject AuthenticationStateProvider AuthenticationStateProvider
 
 <h3>GameSolver</h3>
-<AuthorizeView>
-    <NotAuthorized>
+
         <div>Prisoner's Dilemma</div>
         <EditForm Model="@prisonersDilemma" Context="prisonersDilemmaContext"> 
             <PlayerComponent 
@@ -54,8 +53,7 @@
             @bind-p2bl="@matchingPennies.p2bl"
             @bind-p2br="@matchingPennies.p2br" />
         </EditForm>
-    </NotAuthorized>
-</AuthorizeView>
+        
 @code {
     Game prisonersDilemma = new Game(){
         p1tl = 3,

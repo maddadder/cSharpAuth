@@ -48,8 +48,6 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        var state = await AuthenticationStateProvider.GetAuthenticationStateAsync();
-        
-        userProfiles = await UserProfileService.GetUserProfileAsync(state.User.Identity.Name,"");
+        userProfiles = await UserProfileService.GetUserProfileAsync("");
     }
 }

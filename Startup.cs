@@ -39,7 +39,8 @@ namespace cSharpAuth
             var bindAppSecrets = new AppSecrets();
             Configuration.Bind("AppSecrets", bindAppSecrets);
             services.AddSingleton(bindAppSecrets);
-            
+            List<UserToken> tokenCache = new List<UserToken>();
+            services.AddSingleton(tokenCache);
             services.AddHttpClient<UserProfileService>();
             services.AddHttpClient<UserLinkService>();
             services.AddHttpClient<UserMessageService>();
