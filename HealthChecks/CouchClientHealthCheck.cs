@@ -10,19 +10,19 @@ using Microsoft.Extensions.Diagnostics.HealthChecks;
 
 namespace cSharpAuth.HealthChecks
 {
-    public class UserProfileHealthCheck : IHealthCheck
+    public class CouchClientHealthCheck : IHealthCheck
     {
-        private readonly UserProfileService  _userProfileService;
-        public UserProfileHealthCheck(UserProfileService userProfileService)
+        private readonly UserLinkService  _userLinkService;
+        public CouchClientHealthCheck(UserLinkService userLinkService)
         {
-            this._userProfileService = userProfileService;
+            this._userLinkService = userLinkService;
         }
 
         public async Task<HealthCheckResult> CheckHealthAsync(HealthCheckContext context, CancellationToken cancellationToken = default)
         {
             try
             {
-                var result = await _userProfileService.GetUserProfileAsync("a");
+                var result = await _userLinkService.List("http", 1, 0);
                 return HealthCheckResult.Healthy("A healthy result");
             }
             catch(Exception e){

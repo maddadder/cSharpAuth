@@ -70,7 +70,7 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        userlinks = (await UserLinkService.List("http")).ToList();
+        userlinks = (await UserLinkService.List("http", null, null)).ToList();
         searchUserlinks = userlinks;
     }
     protected string SearchString { get; set; } = string.Empty;

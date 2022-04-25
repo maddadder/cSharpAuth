@@ -5,6 +5,63 @@
     "version": "v1"
   },
   "paths": {
+    "/api/Account/Post": {
+      "post": {
+        "tags": [
+          "Account"
+        ],
+        "summary": "Creates a UserToken",
+        "description": "Creates a user token given the right credentials",
+        "operationId": "Account-Post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserLogin"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserLogin"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserLogin"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Creates a user token",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserToken"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserToken"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserToken"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Wrong Password"
+          },
+          "500": {
+            "description": "Returns an internal error"
+          }
+        }
+      }
+    },
     "/healthcheck": {
       "get": {
         "tags": [
@@ -55,7 +112,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Returns a report",
+            "description": "Returns a UserLink",
             "content": {
               "text/plain": {
                 "schema": {
@@ -75,7 +132,7 @@
             }
           },
           "404": {
-            "description": "Report not found"
+            "description": "UserLink not found"
           },
           "500": {
             "description": "Returns an internal error"
@@ -909,6 +966,22 @@
         },
         "additionalProperties": false
       },
+      "UserLogin": {
+        "required": [
+          "email",
+          "password"
+        ],
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
       "UserMessage": {
         "required": [
           "apiVersion",
@@ -1099,7 +1172,54 @@
           }
         },
         "additionalProperties": false
+      },
+      "UserToken": {
+        "type": "object",
+        "properties": {
+          "token": {
+            "type": "string",
+            "nullable": true
+          },
+          "validaty": {
+            "type": "string",
+            "example": "00:00:00"
+          },
+          "refreshToken": {
+            "type": "string",
+            "nullable": true
+          },
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "email": {
+            "type": "string",
+            "nullable": true
+          },
+          "guidId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "expiredTime": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "securitySchemes": {
+      "Bearer": {
+        "type": "http",
+        "description": "JWT Authorization header using the Bearer scheme.",
+        "scheme": "Bearer",
+        "bearerFormat": "JWT"
       }
     }
-  }
+  },
+  "security": [
+    {
+      "Bearer": [ ]
+    }
+  ]
 }

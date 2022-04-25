@@ -16,9 +16,9 @@ namespace cSharpAuth.Services
             client = new swaggerClient("https://couchclient.leenet.link",_httpClient);
         }
 
-        public async Task<IEnumerable<UserLink>> List(string search)
+        public async Task<IEnumerable<UserLink>> List(string search, int? limit, int? skip)
         {
-            return await client.UserLinkListAsync(search, null, null);
+            return await client.UserLinkListAsync(search, limit, skip);
         }
         public async Task<UserLink> Get(string id)
         {
