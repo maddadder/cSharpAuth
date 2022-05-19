@@ -23,6 +23,13 @@
         <ValidationMessage For="@(() => link.WebsiteLink)" />
     </div>
     <div class="mb-3">
+        <label for="ImgHref" class="form-label">Website Image Link</label>
+        <div class="col-md-4">
+            <InputText class="form-control" @bind-Value="link.WebsiteImgLink" placeholder="https://www.leenet.link" />
+        </div>
+        <ValidationMessage For="@(() => link.WebsiteImgLink)" />
+    </div>
+    <div class="mb-3">
         <label for="Target" class="form-label">Target</label>
         <div class="col-md-4">
             <InputText class="form-control" @bind-Value="link.Target" placeholder="_blank" />

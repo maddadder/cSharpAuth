@@ -41,6 +41,13 @@ else
                         <tr>
                             <td>
                                 <a target="@link.Target" href="@link.Href">@link.Content</a>
+                                @{
+                                    if(!string.IsNullOrEmpty(link.ImgHref))
+                                    {
+                                        <br />
+                                        <img src="@link.ImgHref" />
+                                    }
+                                }
                             </td>
                             <td>@link.Created.ToString("MM/dd/yy")</td>
                             <td>@link.Modified.ToString("MM/dd/yy")</td>
