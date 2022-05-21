@@ -30,6 +30,13 @@
         <ValidationMessage For="@(() => link.WebsiteImgLink)" />
     </div>
     <div class="mb-3">
+        <label for="Category" class="form-label">Category</label>
+        <div class="col-md-4">
+            <InputText class="form-control" @bind-Value="link.Category" placeholder="Link" />
+        </div>
+        <ValidationMessage For="@(() => link.Category)" />
+    </div>
+    <div class="mb-3">
         <label for="Target" class="form-label">Target</label>
         <div class="col-md-4">
             <InputText class="form-control" @bind-Value="link.Target" placeholder="_blank" />
@@ -56,6 +63,8 @@
             link.__T = _link.__T;
             link.Content = _link.Content;
             link.Href = _link.Href;
+            link.ImgHref = _link.ImgHref;
+            link.Category = _link.Category;
             link.Pid = _link.Pid;
             link.Target = _link.Target;
         }
