@@ -44,6 +44,7 @@ namespace cSharpAuth
             services.AddHttpClient<UserProfileService>();
             services.AddHttpClient<UserLinkService>();
             services.AddHttpClient<UserMessageService>();
+            services.AddHttpClient<GameEntryService>();
             services.AddHealthChecks().AddTypeActivatedCheck<CouchClientHealthCheck>(
                 "Sample",
                 failureStatus: HealthStatus.Unhealthy,
