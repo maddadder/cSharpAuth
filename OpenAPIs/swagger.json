@@ -303,247 +303,6 @@
         }
       }
     },
-    "/api/v1/GameOption/GetById/{id}": {
-      "get": {
-        "tags": [
-          "GameOption"
-        ],
-        "summary": "Get gameOption by Id",
-        "description": "Get a gameOption by Id from the request",
-        "operationId": "GameOption-GetById",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Returns a report",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/GameOption"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/GameOption"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/GameOption"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Report not found"
-          },
-          "500": {
-            "description": "Returns an internal error"
-          }
-        }
-      }
-    },
-    "/api/v1/GameOption": {
-      "post": {
-        "tags": [
-          "GameOption"
-        ],
-        "summary": "Create a gameOption",
-        "description": "Create a gameOption from the request",
-        "operationId": "GameOption-Post",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/GameOptionCreateRequestCommand"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/GameOptionCreateRequestCommand"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/GameOptionCreateRequestCommand"
-              }
-            }
-          }
-        },
-        "responses": {
-          "201": {
-            "description": "Create a gameOption"
-          },
-          "409": {
-            "description": "the href of the link already exists"
-          },
-          "500": {
-            "description": "Returns an internal error"
-          }
-        }
-      }
-    },
-    "/api/v1/GameOption/Update/{id}": {
-      "put": {
-        "tags": [
-          "GameOption"
-        ],
-        "summary": "Update a gameOption",
-        "description": "Update a gameOption from the request",
-        "operationId": "GameOption-Update",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/GameOptionUpdateRequestCommand"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/GameOptionUpdateRequestCommand"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/GameOptionUpdateRequestCommand"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Update a gameOption"
-          },
-          "404": {
-            "description": "gameOption not found"
-          },
-          "500": {
-            "description": "Returns an internal error"
-          }
-        }
-      }
-    },
-    "/api/v1/GameOption/Delete/{id}": {
-      "delete": {
-        "tags": [
-          "GameOption"
-        ],
-        "summary": "Delete a gameOption",
-        "description": "Delete a gameOption from the request",
-        "operationId": "GameOption-Delete",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Delete a gameOption"
-          },
-          "404": {
-            "description": "gameOption not found"
-          },
-          "500": {
-            "description": "Returns an internal error"
-          }
-        }
-      }
-    },
-    "/api/v1/GameOption/List": {
-      "get": {
-        "tags": [
-          "GameOption"
-        ],
-        "summary": "Search for gameOptions",
-        "description": "Get a list of gameOptions from the request",
-        "operationId": "GameOption-List",
-        "parameters": [
-          {
-            "name": "Search",
-            "in": "query",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "Limit",
-            "in": "query",
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          },
-          {
-            "name": "Skip",
-            "in": "query",
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Returns the list of gameOptions",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/GameOption"
-                  }
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/GameOption"
-                  }
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/GameOption"
-                  }
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Returns an internal error"
-          }
-        }
-      }
-    },
     "/healthcheck": {
       "get": {
         "tags": [
@@ -1366,6 +1125,7 @@
         "required": [
           "description",
           "name",
+          "options",
           "pid"
         ],
         "type": "object",
@@ -1391,8 +1151,7 @@
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/GameOption"
-            },
-            "nullable": true
+            }
           },
           "created": {
             "type": "string",
@@ -1408,7 +1167,8 @@
       "GameEntryCreateRequestCommand": {
         "required": [
           "description",
-          "name"
+          "name",
+          "options"
         ],
         "type": "object",
         "properties": {
@@ -1425,8 +1185,7 @@
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/GameOption"
-            },
-            "nullable": true
+            }
           }
         },
         "additionalProperties": false
@@ -1435,6 +1194,7 @@
         "required": [
           "description",
           "name",
+          "options",
           "pid"
         ],
         "type": "object",
@@ -1456,8 +1216,7 @@
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/GameOption"
-            },
-            "nullable": true
+            }
           }
         },
         "additionalProperties": false
@@ -1465,79 +1224,10 @@
       "GameOption": {
         "required": [
           "description",
-          "gameEntryRef",
-          "next",
-          "pid"
-        ],
-        "type": "object",
-        "properties": {
-          "pid": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "__T": {
-            "type": "string",
-            "nullable": true
-          },
-          "gameEntryRef": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "description": {
-            "type": "string"
-          },
-          "next": {
-            "type": "string"
-          },
-          "created": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "modified": {
-            "type": "string",
-            "format": "date-time"
-          }
-        },
-        "additionalProperties": false
-      },
-      "GameOptionCreateRequestCommand": {
-        "required": [
-          "description",
-          "gameEntryRef",
           "next"
         ],
         "type": "object",
         "properties": {
-          "gameEntryRef": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "description": {
-            "type": "string"
-          },
-          "next": {
-            "type": "string"
-          }
-        },
-        "additionalProperties": false
-      },
-      "GameOptionUpdateRequestCommand": {
-        "required": [
-          "description",
-          "gameEntryRef",
-          "next",
-          "pid"
-        ],
-        "type": "object",
-        "properties": {
-          "pid": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "gameEntryRef": {
-            "type": "string",
-            "format": "uuid"
-          },
           "description": {
             "type": "string"
           },

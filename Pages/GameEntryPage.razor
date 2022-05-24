@@ -38,23 +38,28 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach (var gameEntry in gameEntries.OrderByDescending(x => x.Modified))
+                                @foreach (var gameEntry in gameEntries.OrderBy(x => x.Created))
                                 {
                                 <tr>
                                     <td>
-                                        <span>Name: '@gameEntry.Name'</span><br/> 
+                                        <span><b>Name:</b> '@gameEntry.Name'</span><br/> 
+                                        <b>Paragraph(s):</b>
+                                        <ul>
                                         @foreach (var desc in gameEntry.Description)
                                         {
-                                            <span>'@desc'</span><br/>
+                                            <li>@desc</li>
                                         }
+                                        </ul>
+                                        <b>Option(s):</b>
+                                        <ul>
                                         @if(gameEntry.Options != null)
                                         {
                                             @foreach (var gameOption in gameEntry.Options)
                                             {
-                                                <span>'@gameOption.Description'</span><br/>
-                                                <span>'@gameOption.Next'</span><br/>
+                                                <li><b>Next:</b> '@gameOption.Next'<b>, Description:</b> '@gameOption.Description'</li>
                                             }
                                         }
+                                        </ul>
                                     </td>
                                     <td>@gameEntry.Created.ToString("MM/dd/yy")</td>
                                     <td>@gameEntry.Modified.ToString("MM/dd/yy")</td>

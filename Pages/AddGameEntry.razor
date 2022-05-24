@@ -19,16 +19,35 @@
                 </div>
                 <ValidationMessage For="@(() => gameEntry.Name)" />
             </div>
-            <span @onclick="AddDescription" style="text-decoration:underline;cursor:pointer">Add Description</span>
+            <span @onclick="AddDescription" style="text-decoration:underline;cursor:pointer">Add Paragraph</span>
             @foreach (var desc in gameEntry.Descriptions) 
             {
                 <div class="mb-3">
-                    <label for="To" class="form-label">description</label>
+                    <label for="To" class="form-label">Paragraph</label>
                     <div class="col-md-4">
                         <InputText class="form-control" @bind-Value="desc.Value" placeholder="Good morning, Jack Spriggins!" />
                     </div>
                     <ValidationMessage For="@(() => desc.Value)" />
                 </div>
+            }
+            <span @onclick="AddOption" style="text-decoration:underline;cursor:pointer">Add Option</span>
+            @foreach (var option in gameEntry.Options) 
+            {
+                <div class="mb-3">
+                    <label for="To" class="form-label">Description</label>
+                    <div class="col-md-4">
+                        <InputText class="form-control" @bind-Value="option.Description" placeholder="Sleep in and enjoy the morning" />
+                    </div>
+                    <ValidationMessage For="@(() => option.Description)" />
+                </div>
+                <div class="mb-3">
+                    <label for="To" class="form-label">Next</label>
+                    <div class="col-md-4">
+                        <InputText class="form-control" @bind-Value="option.Next" placeholder="sleep" />
+                    </div>
+                    <ValidationMessage For="@(() => option.Next)" />
+                </div>
+                <hr/>
             }
             <div class="form-group">
                 <button type="submit" class="btn btn-primary">Save</button>
@@ -99,6 +118,14 @@
         gameEntry.Descriptions.Add(new GameEntryDescription()
         {
             Value=""
+        });
+    }
+    private void AddOption()
+    {
+        gameEntry.Options.Add(new GameOption()
+        {
+            Description="",
+            Next=""
         });
     }
 }
