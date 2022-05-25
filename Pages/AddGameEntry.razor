@@ -19,7 +19,7 @@
                 </div>
                 <ValidationMessage For="@(() => gameEntry.Name)" />
             </div>
-            <span @onclick="AddDescription" style="text-decoration:underline;cursor:pointer">Add Paragraph</span>
+            <span @onclick="AddDescription" style="text-decoration:underline;cursor:pointer">Add Paragraph</span> | <span @onclick="DeleteDescription" style="text-decoration:underline;cursor:pointer">Delete Paragraph</span>
             @foreach (var desc in gameEntry.Descriptions) 
             {
                 <div class="mb-3">
@@ -30,7 +30,7 @@
                     <ValidationMessage For="@(() => desc.Value)" />
                 </div>
             }
-            <span @onclick="AddOption" style="text-decoration:underline;cursor:pointer">Add Option</span>
+            <span @onclick="AddOption" style="text-decoration:underline;cursor:pointer">Add Option</span> | <span @onclick="DeleteOption" style="text-decoration:underline;cursor:pointer">Delete Option</span>
             @foreach (var option in gameEntry.Options) 
             {
                 <div class="mb-3">
@@ -120,6 +120,13 @@
             Value=""
         });
     }
+    private void DeleteDescription()
+    {
+        if(gameEntry.Descriptions.Any())
+        {
+            gameEntry.Descriptions.RemoveAt(gameEntry.Descriptions.Count - 1);
+        }
+    }
     private void AddOption()
     {
         gameEntry.Options.Add(new GameOption()
@@ -127,5 +134,14 @@
             Description="",
             Next=""
         });
+    }
+    private void DeleteOption()
+    {
+        List<GameOption> options = gameEntry.Options.ToList();
+        if(options.Any())
+        {
+            options.RemoveAt(options.Count - 1);
+        }
+        gameEntry.Options = options.ToList();
     }
 }
