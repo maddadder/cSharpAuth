@@ -38,7 +38,7 @@ spec:
         io.kompose.service: csharpauth
     spec:
       containers:
-      - image: 192.168.1.151:32000/csharpauth:1.0.37
+      - image: 192.168.1.151:32000/csharpauth:1.0.38
         imagePullPolicy: ""
         name: csharpauth
         ports:

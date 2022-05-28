@@ -28,12 +28,12 @@ namespace cSharpAuth.Services
             _appSecrets = appSecrets;
             client = new swaggerClient("https://couchclient.leenet.link",_httpClient);
         }
-        public async Task<IEnumerable<GameEntry>> List(string search)
+        public async Task<IEnumerable<GameEntry>> List(string search, int limit, int skip)
         {
             try
             {
                 if(await AddAuthorizationHeader())
-                    return await client.GameEntryListAsync(search, null, null);
+                    return await client.GameEntryListAsync(search, limit, skip);
                 return new List<GameEntry>();
             }
             catch
@@ -47,24 +47,24 @@ namespace cSharpAuth.Services
             await AddAuthorizationHeader();
             return await client.GameEntryGetByIdAsync(g);
         }
-        public async Task Put(GameEntry userMessage)
+        public async Task Put(GameEntry gameEntry)
         {
             await AddAuthorizationHeader();
             GameEntryUpdateRequestCommand cmd = new GameEntryUpdateRequestCommand();
-            cmd.Description = userMessage.Description;
-            cmd.Name = userMessage.Name;
-            cmd.Options = userMessage.Options;
-            cmd.Pid = userMessage.Pid;
+            cmd.Description = gameEntry.Description;
+            cmd.Name = gameEntry.Name;
+            cmd.Options = gameEntry.Options;
+            cmd.Pid = gameEntry.Pid;
             await client.GameEntryUpdateAsync(cmd.Pid.ToString(), cmd);
         }
         
-        public async Task Post(GameEntry userMessage)
+        public async Task Post(GameEntry gameEntry)
         {
             await AddAuthorizationHeader();
             GameEntryCreateRequestCommand cmd = new GameEntryCreateRequestCommand();
-            cmd.Description = userMessage.Description;
-            cmd.Name = userMessage.Name;
-            cmd.Options = userMessage.Options;
+            cmd.Description = gameEntry.Description;
+            cmd.Name = gameEntry.Name;
+            cmd.Options = gameEntry.Options;
             await client.GameEntryPostAsync(cmd);
         }
         public async Task Delete(Guid Pid)
