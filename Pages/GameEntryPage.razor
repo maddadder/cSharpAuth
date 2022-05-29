@@ -20,35 +20,33 @@
         {
             <div class="container">
                 <div class="row">
-                    <div class="col-xs-6 col-md-6">
+                    <div class="col-xs-2 col-md-2">
                         Action(s)
                     </div>
                     <div class="col-xs-4 col-md-4">
                         Search
                     </div>
-                    <div class="col-xs-1 col-md-1">
+                    <div class="col-xs-3 col-md-3">
                         Skip
                     </div>
-                    <div class="col-xs-1 col-md-1">
+                    <div class="col-xs-3 col-md-3">
                         Limit
                     </div>
-                </div>
-                <div class="row">
-                    <div class="col-xs-6 col-md-6">
+                    <div class="col-xs-2 col-md-2">
                         <a href='/gameEntry/add' class="btn btn-primary" role="button">
                             <i class="fas fa-user-plus"></i>
                             Add Game Entry
                         </a>
                     </div>
-                    <div class="col-xs-6 col-md-4">
+                    <div class="col-xs-4 col-md-4">
                         <input type="text" class="form-control" placeholder="Search game entry by name"
                             @bind="SearchString" @bind:event="oninput" @onkeyup="FilterName" />
                     </div>
-                    <div class="col-xs-6 col-md-1">
+                    <div class="col-xs-3 col-md-3">
                         <input type="number" class="form-control" 
                             @bind="Skip" @bind:event="oninput" @onchange="SetPage" step="@Limit" />
                     </div>
-                    <div class="col-xs-6 col-md-1">
+                    <div class="col-xs-3 col-md-3">
                         <input type="number" class="form-control" 
                             @bind="Limit" @bind:event="oninput" @onchange="SetPage" step="10" />
                     </div>
@@ -56,7 +54,7 @@
                         <table class="table">
                             <thead>
                                 <tr>
-                                    <th>Name</th><th>Created</th><th>Modified</th><th>&nbsp;</th><th>&nbsp;</th>
+                                    <th>Name</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -64,14 +62,23 @@
                                 {
                                 <tr>
                                     <td>
+                                        <a href='/gameentry/edit/@gameEntry.Pid' class="btn btn-outline-dark" role="button">
+                                            Edit
+                                        </a> | 
+                                        <a href='/gameentry/delete/@gameEntry.Pid' class="btn btn-outline-danger" role="button">
+                                            Delete
+                                        </a><br/>
                                         <span><b>Name:</b> '@gameEntry.Name'</span><br/> 
+                                        <span><b>Created:</b> @gameEntry.Created.ToString("MM/dd/yy")</span><br/>
+                                        <span><b>Modified:</b> @gameEntry.Modified.ToString("MM/dd/yy")</span><br/>
                                         <b>Paragraph(s):</b>
-                                        <ul>
+                                        <ul style="margin:0px;padding:0px;">
                                         @foreach (var desc in gameEntry.Description)
                                         {
                                             <li>@desc</li>
                                         }
                                         </ul>
+                                        <br/>
                                         <b>Option(s):</b>
                                         <ul>
                                         @if(gameEntry.Options != null)
@@ -82,18 +89,6 @@
                                             }
                                         }
                                         </ul>
-                                    </td>
-                                    <td>@gameEntry.Created.ToString("MM/dd/yy")</td>
-                                    <td>@gameEntry.Modified.ToString("MM/dd/yy")</td>
-                                    <td>
-                                        <a href='/gameentry/edit/@gameEntry.Pid' class="btn btn-outline-dark" role="button">
-                                            Edit
-                                        </a>
-                                    </td>
-                                    <td>
-                                        <a href='/gameentry/delete/@gameEntry.Pid' class="btn btn-outline-danger" role="button">
-                                            Delete
-                                        </a>
                                     </td>
                                 </tr>
                                 }

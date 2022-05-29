@@ -23,9 +23,9 @@
             @foreach (var desc in gameEntry.Descriptions) 
             {
                 <div class="mb-3">
-                    <label for="To" class="form-label">Paragraph</label>
+                    <label for="desc.Value" class="form-label">Paragraph</label>
                     <div class="col-md-4">
-                        <InputText class="form-control" @bind-Value="desc.Value" placeholder="Good morning, Jack Spriggins!" />
+                        <InputTextArea rows="5" class="form-control" @bind-Value="desc.Value" placeholder="Good morning, Jack Spriggins!" />
                     </div>
                     <ValidationMessage For="@(() => desc.Value)" />
                 </div>
