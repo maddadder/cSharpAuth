@@ -1,10 +1,10 @@
 ﻿@page "/gameentry"
-
 @using Microsoft.AspNetCore.Components.Authorization
+@using Microsoft.AspNetCore.WebUtilities
 @using cSharpAuth.Services
 @inject GameEntryService GameEntryService
 @inject AuthenticationStateProvider AuthenticationStateProvider
-
+@inject NavigationManager UriHelper
 
 <AuthorizeView>
     <Authorized>
@@ -44,11 +44,11 @@
                     </div>
                     <div class="col-xs-3 col-md-3">
                         <input type="number" class="form-control" 
-                            @bind="Skip" @bind:event="oninput" @onchange="SetPage" step="@Limit" />
+                            @bind="Skip" @bind:event="oninput" @onchange="SetPage" step="@Limit" min="0" />
                     </div>
                     <div class="col-xs-3 col-md-3">
                         <input type="number" class="form-control" 
-                            @bind="Limit" @bind:event="oninput" @onchange="SetPage" step="10" />
+                            @bind="Limit" @bind:event="oninput" @onchange="SetPage" step="10" min="10" />
                     </div>
                     <div class="col-xs-12 col-md-12">
                         <table class="table">
@@ -62,10 +62,10 @@
                                 {
                                 <tr>
                                     <td>
-                                        <a href='/gameentry/edit/@gameEntry.Pid' class="btn btn-outline-dark" role="button">
+                                        <a href='/gameentry/edit/@gameEntry.Pid?Skip=@Skip&Limit=@Limit' class="btn btn-outline-dark" role="button">
                                             Edit
                                         </a> | 
-                                        <a href='/gameentry/delete/@gameEntry.Pid' class="btn btn-outline-danger" role="button">
+                                        <a href='/gameentry/delete/@gameEntry.Pid?Skip=@Skip&Limit=@Limit' class="btn btn-outline-danger" role="button">
                                             Delete
                                         </a><br/>
                                         <span><b>Name:</b> '@gameEntry.Name'</span><br/> 
@@ -105,18 +105,39 @@
 </AuthorizeView>
 
 @code {
-    
+
+    public int Skip { get; set; }
+    public int Limit { get; set; }
     protected List<GameEntry> gameEntries = new();
     protected List<GameEntry> searchGameEntries = new();
 
     protected override async Task OnInitializedAsync()
     {
+        
+    }
+    protected string SearchString { get; set; } = string.Empty;
+    protected override async Task OnParametersSetAsync()
+    {
+        var uri = UriHelper.ToAbsoluteUri(UriHelper.Uri);
+        QueryHelpers.ParseQuery(uri.Query).TryGetValue("Skip", out var param1);
+        var skip = 0;
+        if(param1.Count() > 0){
+            int.TryParse(param1.First(), out skip);
+            Skip = skip;
+        }
+        QueryHelpers.ParseQuery(uri.Query).TryGetValue("Limit", out var param2);
+        if(param2.Count() > 0){
+            var limit = 0;
+            int.TryParse(param2.First(), out limit);
+            Limit = limit;
+        }
+        if (Skip < 1) 
+            Skip = 0;
+        if (Limit <= 1) 
+            Limit = 10;
         gameEntries = (await GameEntryService.List("UNUSED_STRING", Limit, Skip)).ToList();
         searchGameEntries = gameEntries;
     }
-    protected string SearchString { get; set; } = string.Empty;
-    protected int Skip { get; set; } = 0;
-    protected int Limit { get; set; } = 10;
     protected void FilterName()
     {
         if (!string.IsNullOrEmpty(SearchString))
@@ -135,9 +156,13 @@
         SearchString = string.Empty;
         gameEntries = searchGameEntries;
     }
-    private async Task SetPage()
+    private void SetPage()
     {
-        gameEntries = (await GameEntryService.List("UNUSED_STRING", Limit, Skip)).ToList();
-        searchGameEntries = gameEntries;
+        var query = new Dictionary<string, string> 
+        { 
+            { "Skip", Skip.ToString() },
+            { "Limit", Limit.ToString() },
+        };
+        UriHelper.NavigateTo(QueryHelpers.AddQueryString($"{UriHelper.BaseUri}gameentry", query), true);
     }
 }

@@ -3,14 +3,20 @@
 @using Lib
 @using Microsoft.AspNetCore.Components.Authorization
 @using cSharpAuth.Services
+@using Microsoft.AspNetCore.WebUtilities
 @inject GameEntryService GameEntryService
 @inject NavigationManager NavigationManager
+@inject NavigationManager UriHelper
 
 <h1>@Title GameEntry</h1>
 <hr />
 <AuthorizeView>
     <Authorized Context="Auth">
         <EditForm OnValidSubmit="SaveUser" EditContext="@editContext">
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary">Save</button>
+                <a class="btn btn-light" @onclick="Cancel">Cancel</a>
+            </div>
             <DataAnnotationsValidator />
             <div class="mb-3">
                 <label for="Body" class="form-label">Name</label>
@@ -19,7 +25,6 @@
                 </div>
                 <ValidationMessage For="@(() => gameEntry.Name)" />
             </div>
-            <span @onclick="AddDescription" style="text-decoration:underline;cursor:pointer">Add Paragraph</span> | <span @onclick="DeleteDescription" style="text-decoration:underline;cursor:pointer">Delete Paragraph</span>
             @foreach (var desc in gameEntry.Descriptions) 
             {
                 <div class="mb-3">
@@ -30,7 +35,7 @@
                     <ValidationMessage For="@(() => desc.Value)" />
                 </div>
             }
-            <span @onclick="AddOption" style="text-decoration:underline;cursor:pointer">Add Option</span> | <span @onclick="DeleteOption" style="text-decoration:underline;cursor:pointer">Delete Option</span>
+            <span @onclick="AddDescription" style="text-decoration:underline;cursor:pointer">Add Paragraph</span> | <span @onclick="DeleteDescription" style="text-decoration:underline;cursor:pointer">Delete Paragraph</span>
             @foreach (var option in gameEntry.Options) 
             {
                 <div class="mb-3">
@@ -49,10 +54,8 @@
                 </div>
                 <hr/>
             }
-            <div class="form-group">
-                <button type="submit" class="btn btn-primary">Save</button>
-                <a class="btn btn-light" @onclick="Cancel">Cancel</a>
-            </div>
+            <span @onclick="AddOption" style="text-decoration:underline;cursor:pointer">Add Option</span> | <span @onclick="DeleteOption" style="text-decoration:underline;cursor:pointer">Delete Option</span>
+            <div>&#160;</div>
         </EditForm>
     </Authorized>
     <NotAuthorized>
@@ -62,11 +65,29 @@
 @code {
     [Parameter]
     public string gameEntryId { get; set; }
+
+    public int Skip { get; set; }
+    public int Limit { get; set; }
+
     private EditContext editContext;
     protected string Title = "Add";
     protected GameEntryOverride gameEntry = new();
     protected override async Task OnParametersSetAsync()
     {
+        var uri = UriHelper.ToAbsoluteUri(UriHelper.Uri);
+        QueryHelpers.ParseQuery(uri.Query).TryGetValue("Skip", out var param1);
+        var skip = 0;
+        if(param1.Count() > 0){
+            int.TryParse(param1.First(), out skip);
+            Skip = skip;
+        }
+        QueryHelpers.ParseQuery(uri.Query).TryGetValue("Limit", out var param2);
+        if(param2.Count() > 0){
+            var limit = 0;
+            int.TryParse(param2.First(), out limit);
+            Limit = limit;
+        }
+
         if (!string.IsNullOrEmpty(gameEntryId))
         {
             Title = "Edit";
@@ -111,7 +132,12 @@
     }
     public void Cancel()
     {
-        NavigationManager.NavigateTo("/gameentry");
+        var query = new Dictionary<string, string> 
+        { 
+            { "Skip", Skip.ToString() },
+            { "Limit", Limit.ToString() },
+        };
+        UriHelper.NavigateTo(QueryHelpers.AddQueryString($"{UriHelper.BaseUri}gameentry", query), true);
     }
     private void AddDescription()
     {
