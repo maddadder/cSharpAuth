@@ -1,5 +1,6 @@
 ﻿@page "/"
 
+@using Lib
 @using Microsoft.AspNetCore.Components.Authorization
 @using cSharpAuth.Services
 @inject UserLinkService UserLinkService
@@ -50,7 +51,12 @@ else
                                     if(!string.IsNullOrEmpty(link.ImgHref))
                                     {
                                         <br />
-                                        <img src="@link.ImgHref" />
+                                        <img src="@link.ImgHref" width="100%"/>
+                                    }
+                                    if(!string.IsNullOrEmpty(link.ImgContentBase64))
+                                    {
+                                        <br />
+                                        <img src="@link.ImgContentBase64" width="100%"/>
                                     }
                                 }
                             </td>
@@ -77,12 +83,25 @@ else
 
 @code {
     
-    protected List<UserLink> userlinks = new();
-    protected List<UserLink> searchUserlinks = new();
+    protected List<UserLinkOverride> userlinks = new();
+    protected List<UserLinkOverride> searchUserlinks = new();
 
     protected override async Task OnInitializedAsync()
     {
-        userlinks = (await UserLinkService.List("http", null, null)).ToList();
+        userlinks = (from row in (await UserLinkService.List("http", null, null))
+                    select new UserLinkOverride()
+                    {
+                        __T = row.__T,
+                        Category = row.Category,
+                        Content = row.Content,
+                        Created = row.Created,
+                        Href = row.Href,
+                        ImgContent = row.ImgContent,
+                        ImgHref = row.ImgHref,
+                        Modified = row.Modified,
+                        Pid = row.Pid,
+                        Target = row.Target,
+                    }).ToList();
         searchUserlinks = userlinks;
     }
     protected string SearchString { get; set; } = string.Empty;

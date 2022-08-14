@@ -31,6 +31,7 @@ namespace cSharpAuth.Services
             cmd.Content = link.Content;
             cmd.Href = link.Href;
             cmd.ImgHref = link.ImgHref;
+            cmd.ImgContent = link.ImgContent;
             cmd.Category = link.Category;
             cmd.Pid = link.Pid;
             cmd.Target = link.Target;
@@ -42,6 +43,7 @@ namespace cSharpAuth.Services
             cmd.Content = link.Content;
             cmd.Href = link.Href;
             cmd.ImgHref = link.ImgHref;
+            cmd.ImgContent = link.ImgContent;
             cmd.Category = link.Category;
             cmd.Target = link.Target;
             await client.UserLinkPostAsync(cmd);

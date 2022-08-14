@@ -238,8 +238,8 @@
         "tags": [
           "GameEntry"
         ],
-        "summary": "Search for gameEntrys",
-        "description": "Get a list of gameEntrys from the request",
+        "summary": "Search for gameEntries",
+        "description": "Get a list of gameEntries from the request",
         "operationId": "GameEntry-List",
         "parameters": [
           {
@@ -269,7 +269,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Returns the list of gameEntrys",
+            "description": "Returns the list of gameEntries",
             "content": {
               "text/plain": {
                 "schema": {
@@ -1265,6 +1265,11 @@
             "type": "string",
             "nullable": true
           },
+          "imgContent": {
+            "type": "string",
+            "format": "byte",
+            "nullable": true
+          },
           "category": {
             "type": "string",
             "nullable": true
@@ -1303,6 +1308,11 @@
             "type": "string",
             "nullable": true
           },
+          "imgContent": {
+            "type": "string",
+            "format": "byte",
+            "nullable": true
+          },
           "category": {
             "type": "string",
             "nullable": true
@@ -1336,6 +1346,11 @@
           "imgHref": {
             "pattern": "^(?:http(s)?:\\/\\/)[\\w.-]+(?:\\.[\\w\\.-]+)+[\\w\\-\\._~:/?#[\\]@!\\$&'\\(\\)\\*\\+,;=.]+$",
             "type": "string",
+            "nullable": true
+          },
+          "imgContent": {
+            "type": "string",
+            "format": "byte",
             "nullable": true
           },
           "category": {
