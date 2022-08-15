@@ -43,7 +43,7 @@
                 <div class="col-md-3">
                     @if(!string.IsNullOrEmpty(link.ImgContentBase64))
                     {
-                        <span style="text-decoration: underline;cursor:pointer;color:blue;" @onclick="UnloadFile">Clear</span>
+                        <span class="btn btn-outline-dark" role="button" @onclick="ClearFile">Clear</span>
                     }
                 </div>
             </div>
@@ -63,7 +63,7 @@
             </div>
             <div class="form-group">
                 <button type="submit" class="btn btn-primary">Save</button>
-                <a class="btn btn-light" @onclick="Cancel">Cancel</a>
+                <span class="btn btn-outline-dark" role="button" @onclick="Cancel">Cancel</span>
             </div>
         </EditForm>
     </Authorized>
@@ -114,7 +114,7 @@
         }
         Cancel();
     }
-    public async Task UnloadFile()
+    public async Task ClearFile()
     {
         link.ImgContent = null;
     }

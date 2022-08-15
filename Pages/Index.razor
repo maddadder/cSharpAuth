@@ -33,7 +33,7 @@ else
                 <table class="table">
                     <thead>
                         <tr>
-                            <th>Links</th><th>Created</th><th>Modified</th><th>&nbsp;</th><th>&nbsp;</th>
+                            <th>Links</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -41,36 +41,42 @@ else
                         {
                         <tr>
                             <td>
-                                <a target="@link.Target" href="@link.Href">@link.Content</a>
+                                <h1>@link.Content</h1>
                                 @{
-                                    if(!string.IsNullOrEmpty(link.Category))
-                                    {
-                                        <br />
-                                        <span>@link.Category</span>
-                                    }
                                     if(!string.IsNullOrEmpty(link.ImgHref))
                                     {
-                                        <br />
-                                        <img src="@link.ImgHref" width="100%"/>
+                                        <a target="@link.Target" href="@link.Href"><img src="@link.ImgHref" width="100%"/></a>
                                     }
-                                    if(!string.IsNullOrEmpty(link.ImgContentBase64))
+                                    else if(!string.IsNullOrEmpty(link.ImgContentBase64))
                                     {
-                                        <br />
-                                        <img src="@link.ImgContentBase64" width="100%"/>
+                                        <a target="@link.Target" href="@link.Href"><img src="@link.ImgContentBase64" width="100%"/></a>
+                                    }
+                                    else if(!string.IsNullOrEmpty(link.Category))
+                                    {
+                                        <a target="@link.Target" href="@link.Href">@link.Category</a>
                                     }
                                 }
-                            </td>
-                            <td>@link.Created.ToString("MM/dd/yy")</td>
-                            <td>@link.Modified.ToString("MM/dd/yy")</td>
-                            <td>
-                                <a href='/link/edit/@link.Pid' class="btn btn-outline-dark" role="button">
-                                    Edit
-                                </a>
-                            </td>
-                            <td>
-                                <a href='/link/delete/@link.Pid' class="btn btn-outline-danger" role="button">
-                                    Delete
-                                </a>
+                                <br/><span>Created @link.Created.ToString("MM/dd/yy hh:mm:ss")</span>
+                                <br/><span>Modified @link.Modified.ToString("MM/dd/yy hh:mm:ss")</span>
+                                <table class="table">
+                                    <tr>
+                                        <td>
+                                            <a href='/link/details/@link.Pid' class="btn btn-outline-dark" role="button">
+                                                View
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <a href='/link/edit/@link.Pid' class="btn btn-outline-dark" role="button">
+                                                Edit
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <a href='/link/delete/@link.Pid' class="btn btn-outline-danger" role="button">
+                                                Delete
+                                            </a>
+                                        </td>
+                                    </tr>
+                                </table>
                             </td>
                         </tr>
                         }
