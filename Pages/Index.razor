@@ -29,59 +29,56 @@ else
                 <input type="text" class="form-control" placeholder="Search links by name"
                     @bind="SearchString" @bind:event="oninput" @onkeyup="FilterUser" />
             </div>
-            <div class="col-xs-12 col-md-12">
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>Links</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var link in userlinks.OrderBy(x => x.Content))
-                        {
-                        <tr>
-                            <td>
-                                <h1>@link.Content</h1>
-                                @{
-                                    if(!string.IsNullOrEmpty(link.ImgHref))
-                                    {
-                                        <a target="@link.Target" href="@link.Href"><img src="@link.ImgHref" width="100%"/></a>
-                                    }
-                                    else if(!string.IsNullOrEmpty(link.ImgContentBase64))
-                                    {
-                                        <a target="@link.Target" href="@link.Href"><img src="@link.ImgContentBase64" width="100%"/></a>
-                                    }
-                                    else if(!string.IsNullOrEmpty(link.Category))
-                                    {
-                                        <a target="@link.Target" href="@link.Href">@link.Category</a>
-                                    }
-                                }
-                                <br/><span>Created @link.Created.ToString("MM/dd/yy hh:mm:ss")</span>
-                                <br/><span>Modified @link.Modified.ToString("MM/dd/yy hh:mm:ss")</span>
-                                <table class="table">
-                                    <tr>
-                                        <td>
-                                            <a href='/link/details/@link.Pid' class="btn btn-outline-dark" role="button">
-                                                View
-                                            </a>
-                                        </td>
-                                        <td>
-                                            <a href='/link/edit/@link.Pid' class="btn btn-outline-dark" role="button">
-                                                Edit
-                                            </a>
-                                        </td>
-                                        <td>
-                                            <a href='/link/delete/@link.Pid' class="btn btn-outline-danger" role="button">
-                                                Delete
-                                            </a>
-                                        </td>
-                                    </tr>
-                                </table>
-                            </td>
-                        </tr>
+        </div>
+    </div>
+    <div class="bg-white">
+        <div class="max-w-2xl mx-auto py-16 px-4 sm:py-24 sm:px-6 lg:max-w-7xl lg:px-8">
+            <div class="mt-6 grid grid-cols-1 gap-x-8 gap-y-8 sm:grid-cols-2 sm:gap-y-10 md:grid-cols-4">
+            @foreach (var link in userlinks.OrderBy(x => x.Content))
+            {
+                <div key="@link.Pid" class="relative group">
+                    <div class="aspect-w-4 aspect-h-3 rounded-lg overflow-hidden bg-gray-100 text-center">
+                        @{
+                            if(!string.IsNullOrEmpty(link.ImgHref))
+                            {
+                                <a target="@link.Target" href="@link.Href"><img src="@link.ImgHref" width="100%"/></a>
+                            }
+                            else if(!string.IsNullOrEmpty(link.ImgContentBase64))
+                            {
+                                <a target="@link.Target" href="@link.Href"><img src="@link.ImgContentBase64" width="100%"/></a>
+                            }
+                            else if(!string.IsNullOrEmpty(link.Category))
+                            {
+                                <a target="@link.Target" href="@link.Href">@link.Category</a>
+                            }
                         }
-                    </tbody>
-                </table>
+                        <div class="mt-4 flex items-center justify-between text-base font-medium text-gray-900 space-x-8">
+                            <h3>@link.Content</h3>
+                        </div>
+                        <br/><span>Created @link.Created.ToString("MM/dd/yy hh:mm:ss")</span>
+                        <br/><span>Modified @link.Modified.ToString("MM/dd/yy hh:mm:ss")</span>
+                        <table class="table">
+                            <tr>
+                                <td>
+                                    <a href='/link/details/@link.Pid' class="btn btn-outline-dark" role="button">
+                                        View
+                                    </a>
+                                </td>
+                                <td>
+                                    <a href='/link/edit/@link.Pid' class="btn btn-outline-dark" role="button">
+                                        Edit
+                                    </a>
+                                </td>
+                                <td>
+                                    <a href='/link/delete/@link.Pid' class="btn btn-outline-danger" role="button">
+                                        Delete
+                                    </a>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            }
             </div>
         </div>
     </div>
