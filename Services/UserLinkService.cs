@@ -4,18 +4,30 @@ using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Lib;
+using Microsoft.AspNetCore.Components.Authorization;
 
 namespace cSharpAuth.Services
 {
-    public class UserLinkService
+    public class UserLinkService : BaseService
     {
         private readonly HttpClient _httpClient;
+        private readonly AppSecrets _appSecrets;
         private readonly swaggerClient client;
-        public UserLinkService(HttpClient httpClient){
+        private readonly AuthenticationStateProvider _authenticationStateProvider;
+        private List<UserToken> _tokenCache;
+        public UserLinkService(
+            List<UserToken> tokenCache,
+            HttpClient httpClient, 
+            AppSecrets appSecrets,
+            AuthenticationStateProvider authenticationStateProvider
+            ) : base(tokenCache, httpClient, appSecrets, authenticationStateProvider)
+        {
+            _tokenCache = tokenCache;
+            _authenticationStateProvider = authenticationStateProvider;
             _httpClient = httpClient;
+            _appSecrets = appSecrets;
             client = new swaggerClient("https://couchclient.leenet.link",_httpClient);
         }
-
         public async Task<IEnumerable<UserLink>> List(string search, int? limit, int? skip)
         {
             return await client.UserLinkListAsync(search, limit, skip);
@@ -27,6 +39,7 @@ namespace cSharpAuth.Services
         }
         public async Task Put(UserLinkOverride link)
         {
+            await AddAuthorizationHeader();
             UserLinkUpdateRequestCommand cmd = new UserLinkUpdateRequestCommand();
             cmd.Content = link.Content;
             cmd.Href = link.Href;
@@ -39,6 +52,7 @@ namespace cSharpAuth.Services
         }
         public async Task Post(UserLinkOverride link)
         {
+            await AddAuthorizationHeader();
             UserLinkCreateRequestCommand cmd = new UserLinkCreateRequestCommand();
             cmd.Content = link.Content;
             cmd.Href = link.Href;
@@ -50,6 +64,7 @@ namespace cSharpAuth.Services
         }
         public async Task Delete(Guid Pid)
         {
+            await AddAuthorizationHeader();
             await client.UserLinkDeleteAsync(Pid);
         }
     }

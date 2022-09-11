@@ -32,9 +32,7 @@ namespace cSharpAuth.Services
         {
             try
             {
-                if(await AddAuthorizationHeader())
-                    return await client.GameEntryListAsync(search, limit, skip);
-                return new List<GameEntry>();
+                return await client.GameEntryListAsync(search, limit, skip);
             }
             catch
             {
@@ -44,7 +42,6 @@ namespace cSharpAuth.Services
         public async Task<GameEntry> Get(string id)
         {
             Guid g = new Guid(id);
-            await AddAuthorizationHeader();
             return await client.GameEntryGetByIdAsync(g);
         }
         public async Task Put(GameEntry gameEntry)
