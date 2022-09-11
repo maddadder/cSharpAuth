@@ -14,7 +14,7 @@
                     }
                     else if(!string.IsNullOrEmpty(link.ImgContentBase64))
                     {
-                        <a target="@link.Target" href="@link.Href"><img src="@link.ImgContentBase64" width="100%"/></a>
+                        <a target="@link.Target" href="@link.Href"><img src="/userlinkfile/@link.Pid" width="100%"/></a>
                     }
                     else if(!string.IsNullOrEmpty(link.Category))
                     {
