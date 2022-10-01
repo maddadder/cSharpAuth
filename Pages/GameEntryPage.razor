@@ -1,4 +1,4 @@
-﻿@page "/gameentry"
+﻿@page "/gameentry/{Name?}"
 @using Microsoft.AspNetCore.Components.Authorization
 @using Microsoft.AspNetCore.WebUtilities
 @using cSharpAuth.Services
@@ -84,7 +84,7 @@ else
                                 {
                                     @foreach (var gameOption in gameEntry.Options)
                                     {
-                                        <li><b>Next:</b> '@gameOption.Next'<b>, Description:</b> '@gameOption.Description'</li>
+                                        <li><b>Next:</b> '@gameOption.Next'<b>, Description:</b> '<a style="text-decoration:underline" href="/gameentry/@gameOption.Next" role="button">@gameOption.Description</a>'</li>
                                     }
                                 }
                                 </ul>
@@ -101,8 +101,12 @@ else
 
 @code {
 
+    [Parameter]
+    public string Name { get; set; }
+
     public int Skip { get; set; }
     public int Limit { get; set; }
+
     protected List<GameEntry> gameEntries = new();
     protected List<GameEntry> searchGameEntries = new();
 
@@ -126,11 +130,12 @@ else
             int.TryParse(param2.First(), out limit);
             Limit = limit;
         }
+
         if (Skip < 1) 
             Skip = 0;
         if (Limit <= 1) 
             Limit = 10;
-        gameEntries = (await GameEntryService.List("UNUSED_STRING", Limit, Skip)).ToList();
+        gameEntries = (await GameEntryService.List(Name, Limit, Skip)).ToList();
         searchGameEntries = gameEntries;
     }
     protected void FilterName()
