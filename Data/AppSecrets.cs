@@ -8,6 +8,17 @@ namespace Lib
             get;
             set;
         }
-        
+        public string TwilioAccountSid {
+            get;
+            set;
+        }
+        public string TwilioAuthToken {
+            get;
+            set;
+        }
+        public string ThisPhoneNumber {
+            get;
+            set;
+        }
     }
 }

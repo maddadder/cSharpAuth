@@ -3,8 +3,14 @@
 @using Lib
 @using Microsoft.AspNetCore.Components.Authorization
 @using cSharpAuth.Services
+
+@using Twilio
+@using Twilio.Rest.Api.V2010.Account
+@using Twilio.Types
+
 @inject UserMessageService UserMessageService
 @inject NavigationManager NavigationManager
+@inject AppSecrets _appSecrets
 
 <h1>@Title UserMessage</h1>
 <hr />
@@ -15,7 +21,7 @@
             <div class="mb-3">
                 <label for="Body" class="form-label">Message Content</label>
                 <div class="col-md-4">
-                    <InputText class="form-control" @bind-Value="message.Body" placeholder="My Message" />
+                    <InputTextArea rows="5" class="form-control" @bind-Value="message.Body" placeholder="My Message" />
                 </div>
                 <ValidationMessage For="@(() => message.Body)" />
             </div>
@@ -87,6 +93,23 @@
         else
         {
             await UserMessageService.Post(message);
+            try
+            {
+                var accountSid = _appSecrets.TwilioAccountSid; 
+                var authToken = _appSecrets.TwilioAuthToken;
+                TwilioClient.Init(accountSid, authToken); 
+        
+                var messageOptions = new CreateMessageOptions( 
+                    new PhoneNumber(message.To));   
+                messageOptions.From = message.From;  
+                messageOptions.Body = message.Body;   
+        
+                var _message = MessageResource.Create(messageOptions); 
+            }
+            catch
+            {
+
+            }
         }
         Cancel();
     }
