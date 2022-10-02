@@ -74,7 +74,10 @@
             message.From = _message.From;
             message.ApiVersion = _message.ApiVersion;
             message.Pid = _message.Pid;
-            
+        }
+        else
+        {
+            message.From = _appSecrets.ThisPhoneNumber;
         }
     }
     protected override void OnInitialized()
