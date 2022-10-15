@@ -1,0 +1,94 @@
+@page "/userprofiles/add"
+@page "/userprofiles/edit/{userProfileId}"
+@using Lib
+@using Microsoft.AspNetCore.Components.Authorization
+@using cSharpAuth.Services
+
+@inject UserProfileService UserProfileService
+@inject NavigationManager NavigationManager
+@inject AppSecrets _appSecrets
+
+<h1>@Title UserProfile</h1>
+<hr />
+<AuthorizeView>
+    <Authorized Context="Auth">
+        <EditForm OnValidSubmit="SaveUser" EditContext="@editContext">
+            <DataAnnotationsValidator />
+            <div class="mb-3">
+                <label for="FirstName" class="form-label">FirstName</label>
+                <div class="col-md-4">
+                    <InputTextArea rows="5" class="form-control" @bind-Value="userprofile.FirstName" placeholder="FirstName" />
+                </div>
+                <ValidationMessage For="@(() => userprofile.FirstName)" />
+            </div>
+            <div class="mb-3">
+                <label for="LastName" class="form-label">LastName</label>
+                <div class="col-md-4">
+                    <InputText class="form-control" @bind-Value="userprofile.LastName" placeholder="LastName" />
+                </div>
+                <ValidationMessage For="@(() => userprofile.LastName)" />
+            </div>
+            <div class="mb-3">
+                <label for="Target" class="form-label">Email</label>
+                <div class="col-md-4">
+                    <InputText class="form-control" @bind-Value="userprofile.Email" placeholder="username@domain.com" />
+                </div>
+                <ValidationMessage For="@(() => userprofile.Email)" />
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary">Save</button>
+                <a class="btn btn-light" @onclick="Cancel">Cancel</a>
+            </div>
+        </EditForm>
+    </Authorized>
+    <NotAuthorized>
+        You are not authorized to view this page
+    </NotAuthorized>
+</AuthorizeView>
+@code {
+    [Parameter]
+    public string userProfileId { get; set; }
+    private EditContext editContext;
+    protected string Title = "Add";
+    protected UserProfile userprofile = new();
+    protected override async Task OnParametersSetAsync()
+    {
+        if (!string.IsNullOrEmpty(userProfileId))
+        {
+            Title = "Edit";
+            var _userprofile = await UserProfileService.Get(userProfileId);
+            userprofile.__T = _userprofile.__T;
+            userprofile.FirstName = _userprofile.FirstName;
+            userprofile.LastName = _userprofile.LastName;
+            userprofile.Email = _userprofile.Email;
+            userprofile.Password = _userprofile.Password;
+            userprofile.Pid = _userprofile.Pid;
+        }
+        else
+        {
+            userprofile.Password = _appSecrets.UserProfilePassword;
+        }
+    }
+    protected override void OnInitialized()
+    {
+        editContext = new EditContext(userprofile);
+    }
+    protected async Task SaveUser()
+    {
+        if (!editContext.Validate())
+            return;
+        if (userprofile.Pid != Guid.Empty)
+        {
+            await UserProfileService.Put(userprofile);
+        }
+        else
+        {
+            await UserProfileService.Post(userprofile);
+        }
+        Cancel();
+    }
+    public void Cancel()
+    {
+        NavigationManager.NavigateTo("/userprofiles");
+    }
+}
