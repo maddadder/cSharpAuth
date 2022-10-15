@@ -17,23 +17,23 @@
             <div class="mb-3">
                 <label for="FirstName" class="form-label">FirstName</label>
                 <div class="col-md-4">
-                    <InputTextArea rows="5" class="form-control" @bind-Value="userprofile.FirstName" placeholder="FirstName" />
+                    <InputText class="form-control" @bind-Value="userProfile.FirstName" placeholder="FirstName" />
                 </div>
-                <ValidationMessage For="@(() => userprofile.FirstName)" />
+                <ValidationMessage For="@(() => userProfile.FirstName)" />
             </div>
             <div class="mb-3">
                 <label for="LastName" class="form-label">LastName</label>
                 <div class="col-md-4">
-                    <InputText class="form-control" @bind-Value="userprofile.LastName" placeholder="LastName" />
+                    <InputText class="form-control" @bind-Value="userProfile.LastName" placeholder="LastName" />
                 </div>
-                <ValidationMessage For="@(() => userprofile.LastName)" />
+                <ValidationMessage For="@(() => userProfile.LastName)" />
             </div>
             <div class="mb-3">
                 <label for="Target" class="form-label">Email</label>
                 <div class="col-md-4">
-                    <InputText class="form-control" @bind-Value="userprofile.Email" placeholder="username@domain.com" />
+                    <InputText class="form-control" @bind-Value="userProfile.Email" placeholder="user@leenet.onmicrosoft.com" />
                 </div>
-                <ValidationMessage For="@(() => userprofile.Email)" />
+                <ValidationMessage For="@(() => userProfile.Email)" />
             </div>
             <div class="form-group">
                 <button type="submit" class="btn btn-primary">Save</button>
@@ -50,40 +50,40 @@
     public string userProfileId { get; set; }
     private EditContext editContext;
     protected string Title = "Add";
-    protected UserProfile userprofile = new();
+    protected UserProfile userProfile = new();
     protected override async Task OnParametersSetAsync()
     {
         if (!string.IsNullOrEmpty(userProfileId))
         {
             Title = "Edit";
-            var _userprofile = await UserProfileService.Get(userProfileId);
-            userprofile.__T = _userprofile.__T;
-            userprofile.FirstName = _userprofile.FirstName;
-            userprofile.LastName = _userprofile.LastName;
-            userprofile.Email = _userprofile.Email;
-            userprofile.Password = _userprofile.Password;
-            userprofile.Pid = _userprofile.Pid;
+            var _userProfile = await UserProfileService.Get(userProfileId);
+            userProfile.__T = _userProfile.__T;
+            userProfile.FirstName = _userProfile.FirstName;
+            userProfile.LastName = _userProfile.LastName;
+            userProfile.Email = _userProfile.Email;
+            userProfile.Password = _userProfile.Password;
+            userProfile.Pid = _userProfile.Pid;
         }
         else
         {
-            userprofile.Password = _appSecrets.UserProfilePassword;
+            userProfile.Password = _appSecrets.UserProfilePassword;
         }
     }
     protected override void OnInitialized()
     {
-        editContext = new EditContext(userprofile);
+        editContext = new EditContext(userProfile);
     }
     protected async Task SaveUser()
     {
         if (!editContext.Validate())
             return;
-        if (userprofile.Pid != Guid.Empty)
+        if (userProfile.Pid != Guid.Empty)
         {
-            await UserProfileService.Put(userprofile);
+            await UserProfileService.Put(userProfile);
         }
         else
         {
-            await UserProfileService.Post(userprofile);
+            await UserProfileService.Post(userProfile);
         }
         Cancel();
     }

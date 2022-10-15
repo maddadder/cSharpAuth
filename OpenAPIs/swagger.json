@@ -628,7 +628,7 @@
         ],
         "summary": "Create a usermessage",
         "description": "Create a usermessage from the request",
-        "operationId": "UserMesssage-Post",
+        "operationId": "UserMessage-Post",
         "requestBody": {
           "content": {
             "application/json": {
