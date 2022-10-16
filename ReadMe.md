@@ -25,14 +25,14 @@ docker-compose down
 ```
 # Deploy to microk8s
 ```
-docker push 192.168.1.84:32000/csharpauth:1.0.75
+docker push 192.168.1.84:32000/csharpauth:1.0.76
 microk8s helm3 install csharpauth ./csharpauth
 ```
 # on client
 ```
 npm run buildcss
 docker-compose build
-docker push 192.168.1.151:32000/csharpauth:1.0.75
+docker push 192.168.1.151:32000/csharpauth:1.0.76
 helm upgrade csharpauth ./csharpauth
 
 ```
