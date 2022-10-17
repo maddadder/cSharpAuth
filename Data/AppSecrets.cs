@@ -20,5 +20,21 @@ namespace Lib
             get;
             set;
         }
+        public string SmtpHost {
+            get;
+            set;
+        }
+        public string SmtpUserName {
+            get;
+            set;
+        }
+        public string SmtpPassword {
+            get;
+            set;
+        }
+        public string SmtpFromEmail {
+            get;
+            set;
+        }
     }
 }
