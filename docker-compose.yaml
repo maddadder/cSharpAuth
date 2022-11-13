@@ -3,7 +3,7 @@ version: '2'
 services:
 
   csharpauth:
-      image: 192.168.1.151:32000/csharpauth:1.0.78
+      image: neon-registry.18e7-091a-7bb4-d81e.neoncluster.io/leenet/csharpauth:1.0.82
       build:
           context: ./
           dockerfile: ./Dockerfile

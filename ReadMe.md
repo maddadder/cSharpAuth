@@ -25,16 +25,11 @@ Navigate to http://localhost:5001
 ```
 docker-compose down
 ```
-# Deploy to microk8s
-```
-docker push 192.168.1.84:32000/csharpauth:1.0.78
-microk8s helm3 install csharpauth ./csharpauth
-```
 # on client
 ```
 npm run buildcss
 docker-compose build
-docker push 192.168.1.151:32000/csharpauth:1.0.78
-helm upgrade csharpauth ./csharpauth
+docker push neon-registry.18e7-091a-7bb4-d81e.neoncluster.io/leenet/csharpauth:1.0.82
+helm upgrade csharpauth ./csharpauth --namespace leenet
 
 ```
