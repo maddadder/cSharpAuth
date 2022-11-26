@@ -36,5 +36,9 @@ namespace Lib
             get;
             set;
         }
+        public string swaggerClient {
+            get;
+            set;
+        }
     }
 }

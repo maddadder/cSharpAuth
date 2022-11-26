@@ -29,13 +29,13 @@ docker-compose down
 ```
 npm run buildcss
 docker-compose build
-docker push neon-registry.4e88-13d3-b83a-9fc9.neoncluster.io/leenet/csharpauth:1.0.85
+docker push neon-registry.4e88-13d3-b83a-9fc9.neoncluster.io/leenet/csharpauth:1.0.86
 helm upgrade csharpauth ./csharpauth --namespace leenet
 
-```
 
+
+
+# ingore this
 helm package csharpauth
-helm push csharpauth-1.0.85.tgz oci://neon-registry.4e88-13d3-b83a-9fc9.neoncluster.io/leenet
-
-
-kubectl patch svc neon-system-db --patch '{"spec": { "type": "NodePort", "ports": [ { "nodePort": 30001, "port": 5432, "protocol": "TCP", "targetPort": 5432 } ] } }' --namespace neon-system
+helm push csharpauth-1.0.86.tgz oci://neon-registry.4e88-13d3-b83a-9fc9.neoncluster.io/leenet
+```

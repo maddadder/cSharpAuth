@@ -26,7 +26,7 @@ namespace cSharpAuth.Services
             _authenticationStateProvider = authenticationStateProvider;
             _httpClient = httpClient;
             _appSecrets = appSecrets;
-            client = new swaggerClient("https://couchclient.leenet.link",_httpClient);
+            client = new swaggerClient(appSecrets.swaggerClient,_httpClient);
         }
         public async Task<IEnumerable<UserLink>> List(string search, int? limit, int? skip)
         {
